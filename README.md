@@ -82,7 +82,7 @@ cd studio
 npm run deploy
 ```
 
-Sanity prompts for a hostname on first deploy (for example `dcma`). The Studio URL becomes `https://<hostname>.sanity.studio`.
+This project's Studio URL is **https://dcma.sanity.studio** (do not use `https://1qb86j9s.sanity.studio` — that hostname is not configured and returns "Studio not found").
 
 **Option B — Local Studio (developers)**
 
@@ -253,7 +253,7 @@ Token needs **create** permission on `contactSubmission` documents.
 1. Go to [sanity.io/manage](https://www.sanity.io/manage) → project **Door County Mutual Aid**.
 2. **Members** → **Invite member**.
 3. Assign **Editor** (content) or **Administrator** (content + project settings).
-4. Share the hosted Studio URL (`https://<hostname>.sanity.studio`).
+4. Share the hosted Studio URL: **https://dcma.sanity.studio**
 
 No repo access is required for day-to-day content editing.
 
