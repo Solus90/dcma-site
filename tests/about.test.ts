@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { DEFAULT_ABOUT_PAGE } from '../shared/aboutPageDefaults'
+import { DEFAULT_ABOUT_PAGE } from '../app/utils/aboutPageDefaults'
 import { normalizeAboutPage } from '../app/utils/contentDefaults'
 
 describe('about page content', () => {

@@ -10,7 +10,7 @@ import type {
   SiteSettings,
   StatsSection,
 } from '~/types/content'
-import { DEFAULT_ABOUT_PAGE } from '../../shared/aboutPageDefaults'
+import { DEFAULT_ABOUT_PAGE } from '~/utils/aboutPageDefaults'
 
 export const DEFAULT_NAV_LINKS: NavLink[] = [
   { label: 'Home', href: '/' },
