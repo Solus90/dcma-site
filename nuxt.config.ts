@@ -2,7 +2,14 @@
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
-  modules: ['@nuxtjs/sanity', '@nuxt/fonts'],
+  modules: ['@nuxtjs/sanity', '@nuxt/fonts', '@nuxtjs/sitemap'],
+  site: {
+    url: 'https://www.doorcountymutualaid.org',
+    name: 'Door County Mutual Aid',
+  },
+  app: {
+    head: { htmlAttrs: { lang: 'en' } },
+  },
   css: ['~/assets/css/main.css'],
   fonts: {
     families: [{ name: 'Archivo', weights: [400, 600, 700, 900] }],
