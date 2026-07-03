@@ -11,6 +11,7 @@
     "test": "vitest run"
   },
   "dependencies": {
+    "@nuxt/fonts": "^0.14.0",
     "@nuxtjs/sanity": "^2.3.0",
     "nuxt": "^4.4.8",
     "vue": "^3.5.38",
