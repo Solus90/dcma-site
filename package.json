@@ -17,8 +17,10 @@
   },
   "devDependencies": {
     "@nuxt/test-utils": "^4.0.3",
+    "@sanity/client": "^7.23.0",
     "@vue/test-utils": "^2.4.11",
     "happy-dom": "^20.10.6",
+    "tsx": "^4.22.5",
     "vitest": "^4.1.9"
   }
 }
