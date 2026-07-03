@@ -8,19 +8,20 @@
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
+    "seed": "tsx scripts/seed.ts",
     "test": "vitest run"
   },
   "dependencies": {
     "@nuxt/fonts": "^0.14.0",
     "@nuxtjs/sanity": "^2.3.0",
     "@nuxtjs/sitemap": "^8.2.2",
+    "@sanity/client": "^7.23.0",
     "nuxt": "^4.4.8",
     "vue": "^3.5.38",
     "vue-router": "^5.1.0"
   },
   "devDependencies": {
     "@nuxt/test-utils": "^4.0.3",
-    "@sanity/client": "^7.23.0",
     "@vue/test-utils": "^2.4.11",
     "happy-dom": "^20.10.6",
     "tsx": "^4.22.5",

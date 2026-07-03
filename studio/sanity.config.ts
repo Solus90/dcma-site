@@ -2,7 +2,7 @@ import { defineConfig } from 'sanity'
 import { structureTool } from 'sanity/structure'
 import { schemaTypes } from './schemaTypes'
 
-const singletons = ['siteSettings', 'homePage', 'fridgePage']
+const singletons = ['siteSettings', 'homePage', 'fridgePage', 'aboutPage']
 
 export default defineConfig({
   name: 'default',
@@ -24,6 +24,26 @@ export default defineConfig({
             S.listItem().title('Full Hearts Fridge').child(
               S.document().schemaType('fridgePage').documentId('fridgePage'),
             ),
+            S.listItem().title('About Page').child(
+              S.document().schemaType('aboutPage').documentId('aboutPage'),
+            ),
+            S.divider(),
+            S.listItem()
+              .title('Pages')
+              .schemaType('page')
+              .child(
+                S.documentTypeList('page')
+                  .title('Pages')
+                  .defaultOrdering([{ field: 'title', direction: 'asc' }]),
+              ),
+            S.listItem()
+              .title('Contact messages')
+              .schemaType('contactSubmission')
+              .child(
+                S.documentTypeList('contactSubmission')
+                  .title('Contact messages')
+                  .defaultOrdering([{ field: 'submittedAt', direction: 'desc' }]),
+              ),
           ]),
     }),
   ],

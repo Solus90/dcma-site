@@ -50,3 +50,19 @@ body {
   outline: 3px solid var(--navy);
   outline-offset: 2px;
 }
+
+.skip-link {
+  position: absolute;
+  left: 1rem;
+  top: -100%;
+  z-index: 100;
+  background: var(--navy);
+  color: #fff;
+  padding: 0.75rem 1rem;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.skip-link:focus {
+  top: 1rem;
+}
