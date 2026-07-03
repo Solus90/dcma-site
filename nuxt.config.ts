@@ -7,6 +7,16 @@ export default defineNuxtConfig({
   fonts: {
     families: [{ name: 'Archivo', weights: [400, 600, 700, 900] }],
   },
+  runtimeConfig: {
+    resendApiKey: '',
+    contactTo: 'mutualaiddoorcounty@gmail.com',
+  },
+  // Vercel is auto-detected by Nitro at deploy time — no preset needed locally.
+  // Pages stay static via prerender rules; /api/contact becomes a Vercel Function.
+  routeRules: {
+    '/': { prerender: true },
+    '/full-hearts-fridge': { prerender: true },
+  },
   sanity: {
     projectId: process.env.NUXT_SANITY_PROJECT_ID,
     dataset: 'production',
