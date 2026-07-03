@@ -16,6 +16,7 @@ export default defineNuxtConfig({
   routeRules: {
     '/': { prerender: true },
     '/full-hearts-fridge': { prerender: true },
+    '/about-us': { redirect: { to: '/full-hearts-fridge', statusCode: 301 } },
   },
   sanity: {
     projectId: process.env.NUXT_SANITY_PROJECT_ID,
