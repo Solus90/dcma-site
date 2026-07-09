@@ -42,6 +42,10 @@ Create a token at [sanity.io/manage](https://www.sanity.io/manage) → your proj
 **Site** (http://localhost:3000):
 
 ```bash
+(if you haven't installed Sanity yet) npx sanity dev
+
+OR
+
 npm run dev
 ```
 
