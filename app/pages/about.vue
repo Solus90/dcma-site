@@ -233,9 +233,8 @@ useSeoMeta({
 }
 
 .norms-tldr {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
-  gap: 0.75rem 1.5rem;
+  columns: 3;
+  column-gap: 2rem;
   margin: 1.5rem 0 0;
   padding: 1.5rem;
   background: var(--periwinkle);
@@ -244,9 +243,15 @@ useSeoMeta({
 
 .norms-tldr li {
   position: relative;
+  break-inside: avoid;
+  margin-bottom: 0.65rem;
   padding-left: 1.1rem;
   line-height: 1.5;
   text-wrap: pretty;
+}
+
+.norms-tldr li:last-child {
+  margin-bottom: 0;
 }
 
 .norms-tldr li::before {
@@ -331,6 +336,12 @@ useSeoMeta({
   margin-bottom: 0;
 }
 
+@media (max-width: 900px) {
+  .norms-tldr {
+    columns: 2;
+  }
+}
+
 @media (max-width: 768px) {
   .hero,
   .toc,
@@ -343,7 +354,7 @@ useSeoMeta({
   }
 
   .norms-tldr {
-    grid-template-columns: 1fr;
+    columns: 1;
   }
 }
 </style>
