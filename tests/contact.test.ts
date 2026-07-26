@@ -9,14 +9,19 @@ describe('validateContact', () => {
     expect(validateContact(good).valid).toBe(true)
   })
 
-  it('rejects missing required fields', () => {
-    const r = validateContact({ ...good, email: '' })
+  it.each(['firstName', 'lastName', 'email', 'subject', 'message'] as const)(
+    'rejects a missing %s field',
+    (field) => {
+      const r = validateContact({ ...good, [field]: '' })
+      expect(r.valid).toBe(false)
+      expect(r.errors).toContain(field)
+    },
+  )
+
+  it('rejects a malformed email', () => {
+    const r = validateContact({ ...good, email: 'nope' })
     expect(r.valid).toBe(false)
     expect(r.errors).toContain('email')
-  })
-
-  it('rejects malformed email', () => {
-    expect(validateContact({ ...good, email: 'nope' }).valid).toBe(false)
   })
 })
 
