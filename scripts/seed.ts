@@ -51,7 +51,10 @@ const JOIN = { label: 'JOIN NETWORK', href: 'mailto:mutualaiddoorcounty@gmail.co
 
 const NAV = [
   { _key: 'home', label: 'Home', href: '/' },
-  { _key: 'about', label: 'About', href: '/about' },
+  { _key: 'about', label: 'About Us', href: '/about' },
+  { _key: 'mutual-aid', label: 'What Is Mutual Aid', href: '/what-is-mutual-aid' },
+  { _key: 'projects', label: 'Projects', href: '/projects' },
+  { _key: 'get-involved', label: 'Get Involved', href: '/get-involved' },
   { _key: 'fridge', label: 'Full Hearts Fridge', href: '/full-hearts-fridge' },
 ]
 
@@ -270,6 +273,120 @@ async function run() {
     securityMeetingsHeading: DEFAULT_ABOUT_PAGE.securityMeetingsHeading,
     securityMeetingItems: [...DEFAULT_ABOUT_PAGE.securityMeetingItems],
     seo: { ...DEFAULT_ABOUT_PAGE.seo },
+  })
+
+  console.log('Writing what-is-mutual-aid page…')
+  await client.createOrReplace({
+    _id: 'page-what-is-mutual-aid',
+    _type: 'page',
+    title: 'What Is Mutual Aid',
+    slug: { _type: 'slug', current: 'what-is-mutual-aid' },
+    sections: [
+      {
+        _key: 's1', _type: 'heroSection',
+        heading: 'What Is Mutual Aid?',
+        tagline: 'NOT CHARITY. NOT GOVERNMENT. NEIGHBORS TAKING CARE OF NEIGHBORS.',
+      },
+      {
+        _key: 's2', _type: 'proseSection',
+        eyebrow: 'THE IDEA',
+        heading: 'Direct support without gatekeepers',
+        body: 'Mutual aid is a form of political participation where people take responsibility for caring for one another — not through symbolic acts or petitions, but by actually meeting each other\'s needs. It\'s older than charity and more direct than most social services.\n\nWhen neighbors share food, rides, tools, and time outside of market logic and without applications or income verification, that is mutual aid. The relationship is horizontal — giving and receiving happen in both directions. Everyone has something to offer. Everyone has something to receive.',
+      },
+      {
+        _key: 's3', _type: 'cardGridSection',
+        heading: 'How It\'s Different',
+        style: 'simple',
+        cards: [
+          { _key: 'c1', _type: 'card', title: 'Not charity', body: 'Charity flows one way — donor to recipient. Mutual aid assumes everyone has something to offer and something to receive.' },
+          { _key: 'c2', _type: 'card', title: 'Not social services', body: 'No intake forms, income verification, or eligibility tests. If you need something, you can ask. Full stop.' },
+          { _key: 'c3', _type: 'card', title: 'Not just volunteering', body: 'Volunteers donate time to an organization. In mutual aid, you\'re part of a network — a neighbor, not a helper.' },
+          { _key: 'c4', _type: 'card', title: 'Solidarity, not pity', body: 'The goal isn\'t to feel good about helping — it\'s to build a community where people are genuinely taken care of.' },
+        ],
+      },
+      {
+        _key: 's4', _type: 'ctaSection',
+        heading: 'READY TO SHOW UP?',
+        note: 'Join the network and get connected with neighbors.',
+        cta: JOIN,
+        secondaryCta: REQUEST,
+      },
+    ],
+    seo: {
+      title: 'What Is Mutual Aid | Door County Mutual Aid',
+      description: 'Learn what mutual aid means, how it\'s different from charity, and how Door County neighbors support each other directly.',
+    },
+  })
+
+  console.log('Writing projects page…')
+  await client.createOrReplace({
+    _id: 'page-projects',
+    _type: 'page',
+    title: 'Current Projects',
+    slug: { _type: 'slug', current: 'projects' },
+    sections: [
+      {
+        _key: 's1', _type: 'heroSection',
+        heading: 'Current Projects',
+        tagline: 'WHAT THE NETWORK IS WORKING ON RIGHT NOW',
+      },
+      {
+        _key: 's2', _type: 'cardGridSection',
+        heading: 'WHAT WE\'RE DOING',
+        style: 'photos',
+        cards: [
+          { _key: 'c1', _type: 'card', title: 'Full Hearts Fridge', body: 'We rescue food from local restaurants, grocers, and farms — then get it to neighbors who need it. Open 24/7 at 611 Jefferson Street.', cta: { label: 'LEARN MORE', href: '/full-hearts-fridge' }, image: imageField(photos.strawberryUnload) },
+          { _key: 'c2', _type: 'card', title: 'Solidarity Meetings', body: 'Monthly meetings at 611 Jefferson St to share resources, make decisions together, and plan what\'s next.', cta: JOIN, image: imageField(photos.communityMeal) },
+          { _key: 'c3', _type: 'card', title: 'Direct Support', body: 'Food boxes, winter gear, rides to appointments — one-on-one help when a neighbor needs it fast.', cta: REQUEST, image: imageField(photos.foodPacking) },
+          { _key: 'c4', _type: 'card', title: 'Community Drives', body: 'Seasonal supply drives, cleanups, and events that let the whole neighborhood pitch in.', cta: { label: 'GET INVOLVED', href: '/get-involved' }, image: imageField(photos.deliveryWalk) },
+        ],
+      },
+      {
+        _key: 's3', _type: 'ctaSection',
+        heading: 'WANT TO ADD A PROJECT?',
+        note: 'Have an idea that would benefit Door County neighbors? Bring it to a solidarity meeting.',
+        cta: JOIN,
+      },
+    ],
+    seo: {
+      title: 'Current Projects | Door County Mutual Aid',
+      description: 'See what Door County Mutual Aid is working on — the Full Hearts Fridge, solidarity meetings, direct support, and community drives.',
+    },
+  })
+
+  console.log('Writing get-involved page…')
+  await client.createOrReplace({
+    _id: 'page-get-involved',
+    _type: 'page',
+    title: 'Get Involved',
+    slug: { _type: 'slug', current: 'get-involved' },
+    sections: [
+      {
+        _key: 's1', _type: 'heroSection',
+        heading: 'How to Help',
+        tagline: 'EVERY NEIGHBOR HAS SOMETHING TO OFFER.',
+      },
+      {
+        _key: 's2', _type: 'cardGridSection',
+        heading: 'WAYS TO SHOW UP',
+        intro: 'Pick what fits your time and capacity today.',
+        style: 'simple',
+        cards: [
+          { _key: 'c1', _type: 'card', title: 'Offer your time', body: 'Volunteer at the fridge, help with deliveries, or show up at a solidarity meeting.', cta: { label: 'EMAIL US', href: 'mailto:mutualaiddoorcounty@gmail.com?subject=Volunteer' } },
+          { _key: 'c2', _type: 'card', title: 'Share supplies', body: 'Got extra food, clothing, tools, or household goods? The network can connect them with neighbors who need them.', cta: { label: 'OFFER SUPPLIES', href: 'mailto:mutualaiddoorcounty@gmail.com?subject=Offer%20Supplies' } },
+          { _key: 'c3', _type: 'card', title: 'Join the email list', body: 'Get updates on meetings, drives, and ways to plug in. Low-volume, no spam.', cta: JOIN },
+          { _key: 'c4', _type: 'card', title: 'Request support', body: 'Need food, a ride, help with a bill, or just someone to talk to? Email us — no judgment, no forms.', cta: REQUEST },
+        ],
+      },
+      {
+        _key: 's3', _type: 'contactSectionBlock',
+        heading: 'Get in Touch',
+      },
+    ],
+    seo: {
+      title: 'Get Involved | Door County Mutual Aid',
+      description: 'Volunteer, share supplies, join the email list, or request support. Every neighbor has something to give and something to receive.',
+    },
   })
 
   console.log('Seed complete')
