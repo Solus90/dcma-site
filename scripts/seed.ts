@@ -53,7 +53,7 @@ const NAV = [
   { _key: 'home', label: 'Home', href: '/' },
   { _key: 'about', label: 'About Us', href: '/about' },
   { _key: 'mutual-aid', label: 'What Is Mutual Aid', href: '/what-is-mutual-aid' },
-  { _key: 'groups', label: 'Affiliate Groups', href: '/groups' },
+  { _key: 'groups', label: 'DCMA Projects', href: '/projects' },
   { _key: 'updates', label: 'Updates', href: '/updates' },
   { _key: 'get-involved', label: 'Get Involved', href: '/get-involved' },
   { _key: 'financials', label: 'Financials', href: '/financials' },
@@ -180,7 +180,7 @@ async function run() {
     heroCta: { label: 'JOIN THE NETWORK', href: JOIN.href },
     missionEyebrow: 'WHAT WE ARE',
     missionHeading: 'A HUB, NOT AN ORGANIZATION',
-    missionBody: 'Door County Mutual Aid Collective is a coordination hub — connecting autonomous projects, working groups, and neighbors across Door County. We don\'t run programs; we build networks. If you need help, want to offer it, or have a project to connect to the community, this is where those threads come together.',
+    missionBody: 'Door County Mutual Aid Collective is a coordination hub — a place where neighbors organize, projects get started, and connections get made across Door County. Projects are born here, built by members, and supported by the collective. If you need help, want to offer it, or have an idea to bring to the group, this is where it starts.',
     missionImage: imageField(photos.handsJoined),
     howItWorksHeading: 'How to Plug In',
     howItWorksIntro: 'Three ways to connect. Pick the one that fits today.',
@@ -319,43 +319,57 @@ async function run() {
     },
   })
 
-  console.log('Writing groups page…')
+  console.log('Writing projects page…')
   await client.createOrReplace({
-    _id: 'page-groups',
+    _id: 'page-projects',
     _type: 'page',
-    title: 'Affiliate Groups',
-    slug: { _type: 'slug', current: 'groups' },
+    title: 'DCMA Projects',
+    slug: { _type: 'slug', current: 'projects' },
     sections: [
       {
         _key: 's1', _type: 'heroSection',
-        heading: 'Affiliate Groups',
-        tagline: 'WORKING GROUPS AND PROJECTS OPERATING UNDER THE DCMA UMBRELLA',
+        heading: 'DCMA Projects',
+        tagline: 'INITIATIVES STARTED WITHIN DCMA AND RUN BY MEMBERS',
       },
       {
         _key: 's2', _type: 'proseSection',
-        eyebrow: 'WHO WE ARE',
-        heading: 'A collective of groups, not a single org',
-        body: 'Door County Mutual Aid Collective is made up of autonomous working groups and affiliate projects — each with its own focus and team, all sharing our core principles. Groups operate independently but draw on the collective\'s network, resources, and solidarity.',
+        eyebrow: 'HOW PROJECTS WORK',
+        heading: 'Ideas that start here, built by us',
+        body: 'DCMA projects begin as ideas brought to the collective — workshopped at solidarity meetings, shaped by shared principles, and launched by interested members. Each project runs mostly independently as a smaller working group, then comes back to the broader collective to share progress, brainstorm, and ask for support. They\'re ours because we built them together.',
       },
       {
         _key: 's3', _type: 'cardGridSection',
-        heading: 'OUR GROUPS',
+        heading: 'ACTIVE PROJECTS',
         style: 'photos',
         cards: [
           { _key: 'c1', _type: 'card', title: 'Full Hearts Fridge', body: 'Dedicated to reducing food waste and increasing access to nourishing meals. Partnering with local restaurants, grocery stores, and farms to redirect food that would otherwise go unused to those in need.', cta: { label: 'LEARN MORE', href: '/full-hearts-fridge' }, image: imageField(photos.strawberryUnload) },
-          { _key: 'c2', _type: 'card', title: 'Your Group Here', body: 'Have a project or working group that aligns with DCMA\'s principles? Reach out — we\'d love to connect and support your work.', cta: { label: 'GET IN TOUCH', href: '/contact' }, image: imageField(photos.handsJoined) },
+          { _key: 'c2', _type: 'card', title: 'Have an idea?', body: 'Bring it to a solidarity meeting. If it aligns with our principles and there are members who want to build it, we\'ll help get it off the ground.', cta: { label: 'GET IN TOUCH', href: '/contact' }, image: imageField(photos.handsJoined) },
         ],
       },
       {
-        _key: 's4', _type: 'ctaSection',
-        heading: 'WANT TO START A GROUP?',
-        note: 'Bring your idea to a solidarity meeting. If it aligns with our principles, we\'ll help you get it off the ground.',
+        _key: 's4', _type: 'proseSection',
+        eyebrow: 'PARTNER ORGANIZATIONS',
+        heading: 'Groups we work alongside',
+        body: 'These organizations are not DCMA projects, but they share our values and we work alongside them in Door County. Supporting them is another way to plug into the broader network.',
+      },
+      {
+        _key: 's5', _type: 'cardGridSection',
+        heading: 'PARTNERS',
+        style: 'default',
+        cards: [
+          { _key: 'p1', _type: 'card', title: 'Northern Door Activists', body: 'Grassroots organizing in northern Door County. Reach out through their channels to connect.', cta: { label: 'LEARN MORE', href: 'https://www.facebook.com/northerndooractivists' } },
+        ],
+      },
+      {
+        _key: 's6', _type: 'ctaSection',
+        heading: 'WANT TO CONNECT?',
+        note: 'Whether you have a project idea or know of a partner org we should add here, reach out.',
         cta: JOIN,
       },
     ],
     seo: {
-      title: 'Affiliate Groups | Door County Mutual Aid',
-      description: 'Working groups and affiliate projects operating under the Door County Mutual Aid Collective — including the Full Hearts Fridge and more.',
+      title: 'DCMA Projects | Door County Mutual Aid',
+      description: 'Active projects started within Door County Mutual Aid — including the Full Hearts Fridge — plus partner organizations we work alongside.',
     },
   })
 
