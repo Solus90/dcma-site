@@ -329,7 +329,7 @@ async function run() {
       {
         _key: 's1', _type: 'heroSection',
         heading: 'Affiliate Groups',
-        tagline: 'WORKING GROUPS AND PROJECTS OPERATING UNDER THE DCMAC UMBRELLA',
+        tagline: 'WORKING GROUPS AND PROJECTS OPERATING UNDER THE DCMA UMBRELLA',
       },
       {
         _key: 's2', _type: 'proseSection',
@@ -343,7 +343,7 @@ async function run() {
         style: 'photos',
         cards: [
           { _key: 'c1', _type: 'card', title: 'Full Hearts Fridge', body: 'Dedicated to reducing food waste and increasing access to nourishing meals. Partnering with local restaurants, grocery stores, and farms to redirect food that would otherwise go unused to those in need.', cta: { label: 'LEARN MORE', href: '/full-hearts-fridge' }, image: imageField(photos.strawberryUnload) },
-          { _key: 'c2', _type: 'card', title: 'Your Group Here', body: 'Have a project or working group that aligns with DCMAC\'s principles? Reach out — we\'d love to connect and support your work.', cta: { label: 'GET IN TOUCH', href: '/contact' }, image: imageField(photos.handsJoined) },
+          { _key: 'c2', _type: 'card', title: 'Your Group Here', body: 'Have a project or working group that aligns with DCMA\'s principles? Reach out — we\'d love to connect and support your work.', cta: { label: 'GET IN TOUCH', href: '/contact' }, image: imageField(photos.handsJoined) },
         ],
       },
       {

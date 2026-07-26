@@ -10,7 +10,7 @@ export interface AboutTextItem {
 
 export const DEFAULT_ABOUT_PAGE = {
   heroEyebrow: 'Section 1 · Our Foundation',
-  heroHeading: 'About DCMAC',
+  heroHeading: 'About DCMA',
   version: '1.1',
   date: 'August 31, 2025',
   lede: 'Welcome to the Door County Mutual Aid Collective! This is your essential guide to our collective work.',
@@ -40,7 +40,7 @@ export const DEFAULT_ABOUT_PAGE = {
     { title: 'Direct Action & Projects', body: 'We prioritize creating change and addressing needs directly within the community, without relying solely on external institutions or indirect methods. We focus on projects that foster community support, education, give people a sense of their own power, and shift influence from hierarchies to people and communities — as well as building toward a long-term vision of a healthy, just, and flourishing community.' },
     { title: 'Radical Love & Collective Liberation', body: 'Our work is fueled by a deep love and care for ourselves, our neighbors, and the earth/planet. We are committed to solidarity, especially with those politically targeted and suffering under systems of oppression. We actively seek to dismantle all interlocking systems of oppression.' },
     { title: 'Strategic Nonviolence & Self-Determination', body: 'As a collective, we mobilize using strategic nonviolence in our actions. Simultaneously, we respect the inherent right of individuals and communities to determine how to protect/direct themselves.' },
-    { title: 'Inclusivity & Accessibility', body: 'We welcome anyone interested in the mission and principles of DCMAC. We actively strive to maintain accessibility in our collective spaces and proactively take accountability to improve in areas where we may fall short.' },
+    { title: 'Inclusivity & Accessibility', body: 'We welcome anyone interested in the mission and principles of DCMA. We actively strive to maintain accessibility in our collective spaces and proactively take accountability to improve in areas where we may fall short.' },
     { title: 'Responsiveness & Adaptability', body: 'We value continuous input and dialogue with the community, seeking to respond directly to needs and concerns. We accept responsibility for our actions and maintain flexible, adaptable structures to plan for changing conditions and ensure swift, easy engagement.' },
     { title: 'Joyous & Wholehearted Engagement', body: 'In spite of the struggles we face, we strive to find joy in each other and bring playfulness to our projects. We encourage bringing our whole selves to this group, respecting the often emotional nature of social justice work, collective process, and setting aside egos to appreciate everyone for who they are.' },
     { title: 'Education, Dialogue & Growth', body: 'We are dedicated to continuous collective learning and open communication. We foster environments where knowledge is shared freely, diverse perspectives are welcomed, and critical thinking is encouraged to deepen our understanding and strengthen our collective action. We consistently seek opportunities to educate and improve ourselves, learning from successes and failures to strengthen future initiatives.' },
@@ -84,7 +84,7 @@ export const DEFAULT_ABOUT_PAGE = {
   securityHeading: 'DCMA Security Norms',
   securityIntro: 'Security culture is a set of practices and attitudes designed to increase the safety of political communities. These guidelines are created based on recent and historic state repression, and help to reduce paranoia and increase effectiveness. The central principle of security culture is that people should never be privy to any sensitive information they do not need to know.',
   securityTldr: 'Keep sensitive information inside the circle of people it concerns, collaborate with reliable and experienced community members whose history you can verify, and don\'t give away anything about your private activities.',
-  securityContext: 'DCMAC is a public and above-ground group. We welcome people with different comfort levels and experience with activism and direct action. We don\'t want to expose people to danger that they haven\'t signed up for.',
+  securityContext: 'DCMA is a public and above-ground group. We welcome people with different comfort levels and experience with activism and direct action. We don\'t want to expose people to danger that they haven\'t signed up for.',
   securityItems: [
     'People should never be aware of sensitive information they do not need to know — don\'t ask, don\'t tell.',
     'Don\'t share personally identifying information about yourself or others.',
