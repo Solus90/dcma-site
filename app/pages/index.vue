@@ -1,6 +1,7 @@
 <script setup lang="ts">
 const { data: page } = await useHomePage()
 const { data: settings } = await useSiteSettings()
+const { data: latestUpdate } = await useLatestUpdate()
 
 useSeoMeta({
   title: () => page.value?.seo.title,
@@ -10,6 +11,15 @@ useSeoMeta({
 const requestCta = computed(() =>
   page.value?.howItWorksCards.find(c => c._key === 'request')?.cta,
 )
+
+function formatDate(iso: string) {
+  return new Date(iso).toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    timeZone: 'UTC',
+  })
+}
 </script>
 
 <template>
@@ -44,6 +54,25 @@ const requestCta = computed(() =>
     />
     <HomeStatsMarquee v-if="page.stats?.length" :stats="page.stats" :aria-label="page.statsAriaLabel" />
     <HomeActivityGrid :heading="page.activitiesHeading" :activities="page.activities" />
+
+    <section v-if="latestUpdate" class="latest-update" aria-labelledby="latest-update-heading">
+      <div class="latest-update-inner">
+        <div class="latest-update-meta">
+          <span class="eyebrow">Latest Update</span>
+          <span v-if="latestUpdate.category" class="badge">{{ latestUpdate.category }}</span>
+          <time :datetime="latestUpdate.publishedAt">{{ formatDate(latestUpdate.publishedAt) }}</time>
+        </div>
+        <h2 id="latest-update-heading" class="latest-update-title display">{{ latestUpdate.title }}</h2>
+        <p class="latest-update-summary">{{ latestUpdate.summary }}</p>
+        <div class="latest-update-actions">
+          <NuxtLink to="/updates" class="btn">See all updates</NuxtLink>
+          <a v-if="latestUpdate.cta" :href="latestUpdate.cta.href" class="update-cta-link">
+            {{ latestUpdate.cta.label }}
+          </a>
+        </div>
+      </div>
+    </section>
+
     <ContactSection
       :heading="page.contactHeading"
       :form-copy="page.contactForm"
@@ -70,5 +99,80 @@ const requestCta = computed(() =>
 .mission .body { max-width: 65ch; line-height: 1.6; text-wrap: pretty; }
 @media (max-width: 768px) {
   .mission { grid-template-columns: 1fr; }
+}
+
+.latest-update {
+  background: var(--periwinkle);
+  padding: 3.5rem 2rem;
+}
+
+.latest-update-inner {
+  max-width: 72rem;
+  margin-inline: auto;
+}
+
+.latest-update-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.badge {
+  background: var(--navy);
+  color: #fff;
+  padding: 0.2rem 0.5rem;
+  font-weight: 700;
+  font-size: 0.7rem;
+}
+
+.latest-update-title {
+  font-size: clamp(1.75rem, 5vw, 3.5rem);
+  margin: 0 0 1rem;
+  text-wrap: balance;
+  max-width: 22ch;
+}
+
+.latest-update-summary {
+  max-width: 60ch;
+  line-height: 1.65;
+  margin: 0 0 2rem;
+  text-wrap: pretty;
+}
+
+.latest-update-actions {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.update-cta-link {
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--navy);
+  text-decoration: none;
+  padding-bottom: 2px;
+  border-bottom: 2px solid currentColor;
+}
+
+.update-cta-link:hover {
+  opacity: 0.7;
+}
+
+.update-cta-link:focus-visible {
+  outline: 3px solid var(--navy);
+  outline-offset: 2px;
+}
+
+@media (max-width: 768px) {
+  .latest-update {
+    padding: 2.5rem 1.25rem;
+  }
 }
 </style>
