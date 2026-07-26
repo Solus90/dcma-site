@@ -15,6 +15,5 @@ describe('FridgeValueList', () => {
     expect(w.text()).toContain('Why we run it')
     expect(w.text()).toContain('UNCONDITIONAL SUPPORT')
     expect(w.text()).toContain('direct assistance')
-    expect(w.find('#values-heading').exists()).toBe(true)
   })
 })

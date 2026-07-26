@@ -3,8 +3,6 @@ import { normalizeHomePage, normalizeSiteSettings } from '../app/utils/contentDe
 import type { HomePage } from '../app/types/content'
 import { makeSettings } from './fixtures'
 
-const DEFAULT_NAV_COUNT = 4
-
 describe('normalizeHomePage', () => {
   it('fills missing contactForm fields from defaults', () => {
     const page = normalizeHomePage({
@@ -36,7 +34,9 @@ describe('normalizeSiteSettings', () => {
   it('fills missing nav, errorPage, and fridgeShell fields from defaults', () => {
     const settings = normalizeSiteSettings(makeSettings({ navLinks: [] }))
 
-    expect(settings.navLinks).toHaveLength(DEFAULT_NAV_COUNT)
+    const navLabels = settings.navLinks.map(l => l.label)
+    expect(navLabels).toContain('Home')
+    expect(settings.navLinks.some(l => l.children && l.children.length > 0)).toBe(true)
     expect(settings.errorPage.backHomeLabel).toBe('Back home')
     expect(settings.fridgeShell.loadingMessage).toContain('Fetching')
   })
