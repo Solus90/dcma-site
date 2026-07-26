@@ -1,8 +1,11 @@
 import { describe, it, expect } from 'vitest'
 import { normalizeHomePage, normalizeSiteSettings } from '../app/utils/contentDefaults'
-import type { HomePage, SiteSettings } from '../app/types/content'
+import type { HomePage } from '../app/types/content'
+import { makeSettings } from './fixtures'
 
-describe('content defaults', () => {
+const DEFAULT_NAV_COUNT = 4
+
+describe('normalizeHomePage', () => {
   it('fills missing contactForm fields from defaults', () => {
     const page = normalizeHomePage({
       heroHeading: 'Test',
@@ -27,27 +30,13 @@ describe('content defaults', () => {
     expect(page.contactForm.reassurance).toContain('We read every message')
     expect(page.activitiesHeading).toBe('WHAT WE DO')
   })
+})
 
-  it('fills missing site settings shell fields from defaults', () => {
-    const settings = normalizeSiteSettings({
-      orgName: 'DCMA',
-      logoUrl: '',
-      email: 'x@y.z',
-      facebookUrl: 'https://facebook.com/x',
-      address: '',
-      meetingNote: '',
-      joinCta: { label: 'Join', href: '#' },
-      footerTagline: 'Tagline',
-      copyright: '© 2026',
-      skipLinkLabel: '',
-      facebookLabel: '',
-      navAriaLabel: '',
-      navLinks: [],
-      errorPage: null as unknown as SiteSettings['errorPage'],
-      fridgeShell: null as unknown as SiteSettings['fridgeShell'],
-    })
+describe('normalizeSiteSettings', () => {
+  it('fills missing nav, errorPage, and fridgeShell fields from defaults', () => {
+    const settings = normalizeSiteSettings(makeSettings({ navLinks: [] }))
 
-    expect(settings.navLinks).toHaveLength(4)
+    expect(settings.navLinks).toHaveLength(DEFAULT_NAV_COUNT)
     expect(settings.errorPage.backHomeLabel).toBe('Back home')
     expect(settings.fridgeShell.loadingMessage).toContain('Fetching')
   })
