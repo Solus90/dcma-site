@@ -109,10 +109,13 @@ export const LATEST_UPDATE_QUERY = /* groq */ `*[_type == "update"] | order(publ
   "imageAlt": coalesce(image.alt, title),
   cta }`
 
-function withNormalizedData<T>(
+async function withNormalizedData<T>(
   query: ReturnType<typeof useSanityQuery<T>>,
   normalize: (data: T) => T,
 ) {
+  // Wait for Sanity data before returning so callers can safely check page.value.
+  await query
+
   const data = computed(() => {
     const value = query.data.value
     return value ? normalize(value) : null
