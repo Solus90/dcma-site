@@ -1,0 +1,76 @@
+---
+description: Unit test style guide for Vitest test files
+globs: **/*.test.ts,**/*.test.tsx
+alwaysApply: false
+---
+
+# Vitest Unit Tests
+
+## Core Principles
+
+1. **Test Business Logic, Not Wrappers** — avoid excessive mocking that only tests your mocks; mock external services, time, and I/O but not business logic
+2. **Refactor for Testability** — when code is hard to test due to coupling, extract pure functions first
+3. **No Magic Numbers** — use named constants for non-obvious values (0 and 1 are fine)
+4. **Test Realistic Scenarios** — production scenarios only; test behavior, not implementation details; cover happy paths → error handling → boundary conditions
+5. **Clear Organization** — descriptive test names, Arrange-Act-Assert, nest `describe` blocks logically
+6. **Independence** — each test runs independently; no shared mutable state; use `beforeEach` for setup
+7. **Type Safety** — proper TypeScript types for test data; type `vi.fn()` mocks generically
+8. **Minimal Test Data** — only include fields relevant to the test; use factory functions for complex objects
+9. **Don't Test Simple Data Containers** — test the code that *uses* a class, not the class itself
+10. **Non-Null Assertions After Checks** — after `expect(x).not.toBeNull()`, use `x!.prop` not `x?.prop`
+11. **`it.each()` for Repetitive Tests** — when 3+ tests share identical structure and differ only in data
+12. **Redundancy Check** — before finalizing, consolidate tests that verify the same behavior with different wording
+
+## Minimal Test Data Pattern
+
+```typescript
+// ❌ Includes irrelevant fields with unnecessary detail
+const data = { label: 'Home', href: '/', category: 'nav', order: 1, active: true }
+
+// ✅ Only what the function under test actually uses
+function makeNavLink(overrides?: Partial<NavLink>): NavLink {
+  return { label: 'Home', href: '/', ...overrides }
+}
+```
+
+## Non-Null Assertion Pattern
+
+```typescript
+// ❌ Redundant optional chaining after null check
+expect(result).not.toBeNull()
+expect(result?.label).toBe('Home')
+
+// ✅ Non-null assertion after check
+expect(result).not.toBeNull()
+expect(result!.label).toBe('Home')
+```
+
+## `it.each()` Pattern
+
+```typescript
+// ❌ Three tests with identical structure
+it('rejects missing email', () => { ... })
+it('rejects missing name', () => { ... })
+it('rejects missing message', () => { ... })
+
+// ✅ Consolidated
+it.each(['email', 'firstName', 'message'])('rejects missing %s', (field) => {
+  const result = validate({ ...good, [field]: '' })
+  expect(result.valid).toBe(false)
+  expect(result.errors).toContain(field)
+})
+```
+
+## Quick Checklist
+
+- [ ] Tests run independently
+- [ ] Descriptive names (behavior + expected outcome)
+- [ ] Named constants for non-obvious numbers
+- [ ] Realistic scenarios only
+- [ ] Minimal, purposeful mocking
+- [ ] Both success and error paths covered
+- [ ] No real I/O
+- [ ] Type-safe
+- [ ] `it.each()` for 3+ repetitive tests
+- [ ] Non-null assertions after null checks
+- [ ] Redundancy check performed
