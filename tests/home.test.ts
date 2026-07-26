@@ -14,7 +14,7 @@ describe('HowItWorks', () => {
 
 describe('StatsMarquee', () => {
   it('renders every stat', () => {
-    const w = mount(StatsMarquee, { props: { stats: ['150+ HOURS', '70+ MEMBERS'] } })
+    const w = mount(StatsMarquee, { props: { stats: ['150+ HOURS', '70+ MEMBERS'], ariaLabel: 'Community impact' } })
     expect(w.text()).toContain('150+ HOURS')
     expect(w.text()).toContain('70+ MEMBERS')
   })
