@@ -357,7 +357,7 @@ async function run() {
         heading: 'PARTNERS',
         style: 'default',
         cards: [
-          { _key: 'p1', _type: 'card', title: 'Northern Door Activists', body: 'Grassroots organizing in northern Door County. Reach out through their channels to connect.', cta: { label: 'LEARN MORE', href: 'https://www.facebook.com/northerndooractivists' } },
+          { _key: 'p1', _type: 'card', title: 'Northern Door Activism', body: 'Grassroots organizing for social and political change in northern Door County.', cta: { label: 'LEARN MORE', href: 'https://www.northerndooractivism.com/' } },
         ],
       },
       {
