@@ -6,8 +6,26 @@ export const navLink = defineType({
   type: 'object',
   fields: [
     defineField({ name: 'label', type: 'string', validation: (r) => r.required() }),
-    defineField({ name: 'href', type: 'string', validation: (r) => r.required() }),
+    defineField({ name: 'href', type: 'string', description: 'Leave blank to make this a dropdown-only label', }),
+    defineField({
+      name: 'children',
+      title: 'Dropdown items',
+      type: 'array',
+      of: [{
+        type: 'object',
+        fields: [
+          defineField({ name: 'label', type: 'string', validation: (r) => r.required() }),
+          defineField({ name: 'href', type: 'string', validation: (r) => r.required() }),
+        ],
+      }],
+    }),
   ],
+  preview: {
+    select: { label: 'label', href: 'href' },
+    prepare({ label, href }) {
+      return { title: label, subtitle: href || 'dropdown' }
+    },
+  },
 })
 
 export const contactFormCopy = defineType({

@@ -1,5 +1,5 @@
 export interface Cta { label: string; href: string }
-export interface NavLink { label: string; href: string }
+export interface NavLink { label: string; href?: string; children?: NavLink[] }
 export interface Card {
   _key: string
   title: string

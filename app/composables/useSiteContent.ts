@@ -4,7 +4,7 @@ export const SITE_SETTINGS_QUERY = /* groq */ `*[_id == "siteSettings"][0]{
   orgName, "logoUrl": logo.asset->url, email, facebookUrl, address,
   meetingNote, joinCta, footerTagline, copyright,
   skipLinkLabel, facebookLabel, navAriaLabel,
-  navLinks[]{ label, href },
+  navLinks[]{ label, href, children[]{ label, href } },
   errorPage,
   fridgeShell }`
 

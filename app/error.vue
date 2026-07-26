@@ -24,7 +24,7 @@ useHead({
       </p>
       <div class="actions">
         <NuxtLink to="/" class="btn btn-dark">{{ copy.backHomeLabel }}</NuxtLink>
-        <NuxtLink to="/full-hearts-fridge" class="btn">{{ copy.fridgeLinkLabel }}</NuxtLink>
+        <NuxtLink to="/projects/full-hearts-fridge" class="btn">{{ copy.fridgeLinkLabel }}</NuxtLink>
         <a
           class="btn btn-outline"
           :href="`mailto:${settings.email}`"

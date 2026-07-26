@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { Cta } from '~/types/content'
 
-defineProps<{
+const props = defineProps<{
   heading: string
   address: string
   hours: string
@@ -12,6 +12,19 @@ defineProps<{
   guidelines: string[]
   donationCta: Cta
 }>()
+
+const appleMapUrl = computed(() => {
+  const q = encodeURIComponent(props.address.replace(/\n/g, ', '))
+  return `https://maps.apple.com/?q=${q}`
+})
+
+// true on Apple devices — show both map buttons; false elsewhere — show single Google Maps button
+const isAppleDevice = ref(false)
+
+onMounted(() => {
+  const ua = navigator.userAgent
+  isAppleDevice.value = /iPhone|iPad|iPod/.test(ua) || /^Mac/.test(navigator.platform)
+})
 </script>
 
 <template>
@@ -25,8 +38,16 @@ defineProps<{
         <p class="address">{{ address }}</p>
         <p class="hours-lead">{{ hours }}</p>
         <p class="pickup">{{ pickupNote }}</p>
+        <!-- Apple device: show both buttons -->
+        <template v-if="isAppleDevice">
+          <div class="map-btns">
+            <a class="btn btn-outline map-btn" :href="appleMapUrl" v-bind="linkTarget(appleMapUrl)">Apple Maps</a>
+            <a v-if="mapUrl" class="btn btn-outline map-btn" :href="mapUrl" v-bind="linkTarget(mapUrl)">Google Maps</a>
+          </div>
+        </template>
+        <!-- Non-Apple: single Google Maps button -->
         <a
-          v-if="mapUrl"
+          v-else-if="mapUrl"
           class="btn btn-outline map-btn"
           :href="mapUrl"
           v-bind="linkTarget(mapUrl)"
@@ -116,6 +137,12 @@ defineProps<{
 .btn-outline:focus-visible {
   outline: 3px solid var(--navy);
   outline-offset: 2px;
+}
+
+.map-btns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
 }
 
 .donate {
