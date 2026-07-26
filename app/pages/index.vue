@@ -42,7 +42,7 @@ const requestCta = computed(() =>
       :intro="page.howItWorksIntro"
       :cards="page.howItWorksCards"
     />
-    <HomeStatsMarquee :stats="page.stats" :aria-label="page.statsAriaLabel" />
+    <HomeStatsMarquee v-if="page.stats?.length" :stats="page.stats" :aria-label="page.statsAriaLabel" />
     <HomeActivityGrid :heading="page.activitiesHeading" :activities="page.activities" />
     <ContactSection
       :heading="page.contactHeading"

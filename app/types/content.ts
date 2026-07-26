@@ -202,6 +202,18 @@ export interface AboutTextItem {
   body: string
 }
 
+export interface Update {
+  _id: string
+  title: string
+  slug: string
+  publishedAt: string
+  category?: 'event' | 'announcement' | 'news'
+  summary: string
+  imageUrl?: string
+  imageAlt?: string
+  cta?: Cta
+}
+
 export interface AboutPage {
   heroEyebrow: string
   heroHeading: string

@@ -53,8 +53,11 @@ const NAV = [
   { _key: 'home', label: 'Home', href: '/' },
   { _key: 'about', label: 'About Us', href: '/about' },
   { _key: 'mutual-aid', label: 'What Is Mutual Aid', href: '/what-is-mutual-aid' },
-  { _key: 'projects', label: 'Projects', href: '/projects' },
+  { _key: 'groups', label: 'Affiliate Groups', href: '/groups' },
+  { _key: 'updates', label: 'Updates', href: '/updates' },
   { _key: 'get-involved', label: 'Get Involved', href: '/get-involved' },
+  { _key: 'financials', label: 'Financials', href: '/financials' },
+  { _key: 'contact', label: 'Contact', href: '/contact' },
   { _key: 'fridge', label: 'Full Hearts Fridge', href: '/full-hearts-fridge' },
 ]
 
@@ -172,32 +175,30 @@ async function run() {
   await client.createOrReplace({
     _id: 'homePage', _type: 'homePage',
     heroHeading: 'Door County Mutual Aid',
-    heroTagline: 'NEIGHBORS SHARING WHAT THEY HAVE — NO PAPERWORK, NO WAITING LIST.',
+    heroTagline: 'A NETWORK HUB CONNECTING NEIGHBORS, PROJECTS, AND MUTUAL SUPPORT ACROSS DOOR COUNTY.',
     heroImage: img(hand, 'Door County Mutual Aid handprint mark'),
     heroCta: { label: 'JOIN THE NETWORK', href: JOIN.href },
-    missionEyebrow: 'OUR MISSION',
-    missionHeading: 'NEIGHBORS HELPING NEIGHBORS',
-    missionBody: 'Mutual aid means we take care of each other directly — no intake forms, no gatekeepers. If you need a ride, groceries, or someone to listen, we connect you with people nearby who can help. If you can spare time or supplies, we make it easy to share.',
+    missionEyebrow: 'WHAT WE ARE',
+    missionHeading: 'A HUB, NOT AN ORGANIZATION',
+    missionBody: 'Door County Mutual Aid Collective is a coordination hub — connecting autonomous projects, working groups, and neighbors across Door County. We don\'t run programs; we build networks. If you need help, want to offer it, or have a project to connect to the community, this is where those threads come together.',
     missionImage: imageField(photos.handsJoined),
-    howItWorksHeading: 'How It Works',
-    howItWorksIntro: 'Three ways to plug in. Pick the one that fits today.',
+    howItWorksHeading: 'How to Plug In',
+    howItWorksIntro: 'Three ways to connect. Pick the one that fits today.',
     howItWorksCards: [
       { _key: 'request', _type: 'card', title: 'Request Help', body: 'Tell us what you need — food, a ride, help with a bill. Email us and a neighbor will follow up.', cta: REQUEST },
-      { _key: 'offer', _type: 'card', title: 'Offer Help', body: 'Got extra groceries, tools, or time? Let us know what you can share and we\'ll match you with someone nearby.', cta: { label: 'OFFER SUPPORT', href: 'mailto:mutualaiddoorcounty@gmail.com?subject=Offer%20Support' } },
-      { _key: 'join', _type: 'card', title: 'Join Network', body: 'Get updates on meetings, drives, and ways to show up for neighbors.', cta: JOIN },
+      { _key: 'offer', _type: 'card', title: 'Offer Help', body: 'Got extra groceries, tools, or time? Let us know what you can share and we\'ll connect you with someone nearby.', cta: { label: 'OFFER SUPPORT', href: 'mailto:mutualaiddoorcounty@gmail.com?subject=Offer%20Support' } },
+      { _key: 'join', _type: 'card', title: 'Join the Network', body: 'Get updates on meetings and ways to show up for neighbors.', cta: JOIN },
     ],
-    stats: ['150+ HOURS OF DIRECT SUPPORT PROVIDED', '70+ NEW COMMUNITY MEMBERS JOINED', '12+ SOLIDARITY MEETINGS FACILITATED'],
+    stats: [],
     statsAriaLabel: 'Community impact',
-    activitiesHeading: 'WHAT WE DO',
+    activitiesHeading: 'CONNECTED PROJECTS',
     activities: [
-      { _key: 'a1', _type: 'card', title: 'Direct Support', body: 'Food boxes, winter gear, rides to appointments — whatever a neighbor is short on today.', image: imageField(photos.foodPacking) },
-      { _key: 'a2', _type: 'card', title: 'Solidarity Meetings', body: 'Monthly meetups at 611 Jefferson St to share resources and plan together.', image: imageField(photos.communityMeal) },
-      { _key: 'a3', _type: 'card', title: 'Resource Hub', body: 'Shared spaces and supplies the network can draw on when someone needs help fast.', image: imageField(photos.gardenSign) },
-      { _key: 'a4', _type: 'card', title: 'Community Action', body: 'Cleanups, fridge runs, and volunteer shifts that keep the network moving.', image: imageField(photos.deliveryWalk) },
+      { _key: 'a1', _type: 'card', title: 'Full Hearts Fridge', body: 'Dedicated to reducing food waste and increasing access to nourishing meals. Partnering with local restaurants, grocery stores, and farms to redirect food to those in need.', cta: { label: 'LEARN MORE', href: '/full-hearts-fridge' }, image: imageField(photos.strawberryUnload) },
+      { _key: 'a2', _type: 'card', title: 'Solidarity Meetings', body: 'Monthly gatherings to share resources, make decisions together, and plan collective action. Location rotates — check the updates page for the next meeting.', cta: { label: 'SEE UPDATES', href: '/updates' }, image: imageField(photos.communityMeal) },
     ],
     contactHeading: 'Get in Touch',
     contactForm: CONTACT_FORM,
-    seo: { title: 'Home | Door County Mutual Aid', description: 'Community-led support through solidarity and shared resources in Door County, Wisconsin.' },
+    seo: { title: 'Home | Door County Mutual Aid', description: 'A network hub connecting neighbors, projects, and mutual support across Door County, Wisconsin.' },
   })
 
   console.log('Writing fridgePage…')
@@ -206,7 +207,7 @@ async function run() {
   await client.createOrReplace({
     _id: 'fridgePage', _type: 'fridgePage',
     heading: 'Full Hearts Fridge',
-    intro: 'We rescue food that would go to waste from local restaurants, grocers, and farms — then get it to neighbors who need it. No paperwork, just meals.',
+    intro: 'Dedicated to reducing food waste and increasing access to nourishing meals within our community. By partnering with local restaurants, grocery stores, and farms we collect food that would otherwise go unused and redirect it to those in need.',
     heroImage: imageField(photos.strawberryUnload),
     cta: VOLUNTEER,
     findHeading: 'Find the Fridge',
@@ -223,7 +224,7 @@ async function run() {
       'Not sure? Email us before dropping off.',
     ],
     donationCta: DONATE,
-    valuesHeading: 'Why we run it',
+    valuesHeading: 'Why it exists',
     values: [
       { _key: 'v1', _type: 'card', title: 'UNCONDITIONAL SUPPORT', body: 'Food when you need it — no proof of hardship, no strings attached.', image: imageField(photos.sharedTomatoes) },
       { _key: 'v2', _type: 'card', title: 'COMMUNITY AGREEMENT', body: 'We decide together how the fridge runs and who it serves.', image: imageField(photos.handsJoined) },
@@ -318,39 +319,43 @@ async function run() {
     },
   })
 
-  console.log('Writing projects page…')
+  console.log('Writing groups page…')
   await client.createOrReplace({
-    _id: 'page-projects',
+    _id: 'page-groups',
     _type: 'page',
-    title: 'Current Projects',
-    slug: { _type: 'slug', current: 'projects' },
+    title: 'Affiliate Groups',
+    slug: { _type: 'slug', current: 'groups' },
     sections: [
       {
         _key: 's1', _type: 'heroSection',
-        heading: 'Current Projects',
-        tagline: 'WHAT THE NETWORK IS WORKING ON RIGHT NOW',
+        heading: 'Affiliate Groups',
+        tagline: 'WORKING GROUPS AND PROJECTS OPERATING UNDER THE DCMAC UMBRELLA',
       },
       {
-        _key: 's2', _type: 'cardGridSection',
-        heading: 'WHAT WE\'RE DOING',
+        _key: 's2', _type: 'proseSection',
+        eyebrow: 'WHO WE ARE',
+        heading: 'A collective of groups, not a single org',
+        body: 'Door County Mutual Aid Collective is made up of autonomous working groups and affiliate projects — each with its own focus and team, all sharing our core principles. Groups operate independently but draw on the collective\'s network, resources, and solidarity.',
+      },
+      {
+        _key: 's3', _type: 'cardGridSection',
+        heading: 'OUR GROUPS',
         style: 'photos',
         cards: [
-          { _key: 'c1', _type: 'card', title: 'Full Hearts Fridge', body: 'We rescue food from local restaurants, grocers, and farms — then get it to neighbors who need it. Open 24/7 at 611 Jefferson Street.', cta: { label: 'LEARN MORE', href: '/full-hearts-fridge' }, image: imageField(photos.strawberryUnload) },
-          { _key: 'c2', _type: 'card', title: 'Solidarity Meetings', body: 'Monthly meetings at 611 Jefferson St to share resources, make decisions together, and plan what\'s next.', cta: JOIN, image: imageField(photos.communityMeal) },
-          { _key: 'c3', _type: 'card', title: 'Direct Support', body: 'Food boxes, winter gear, rides to appointments — one-on-one help when a neighbor needs it fast.', cta: REQUEST, image: imageField(photos.foodPacking) },
-          { _key: 'c4', _type: 'card', title: 'Community Drives', body: 'Seasonal supply drives, cleanups, and events that let the whole neighborhood pitch in.', cta: { label: 'GET INVOLVED', href: '/get-involved' }, image: imageField(photos.deliveryWalk) },
+          { _key: 'c1', _type: 'card', title: 'Full Hearts Fridge', body: 'Dedicated to reducing food waste and increasing access to nourishing meals. Partnering with local restaurants, grocery stores, and farms to redirect food that would otherwise go unused to those in need.', cta: { label: 'LEARN MORE', href: '/full-hearts-fridge' }, image: imageField(photos.strawberryUnload) },
+          { _key: 'c2', _type: 'card', title: 'Your Group Here', body: 'Have a project or working group that aligns with DCMAC\'s principles? Reach out — we\'d love to connect and support your work.', cta: { label: 'GET IN TOUCH', href: '/contact' }, image: imageField(photos.handsJoined) },
         ],
       },
       {
-        _key: 's3', _type: 'ctaSection',
-        heading: 'WANT TO ADD A PROJECT?',
-        note: 'Have an idea that would benefit Door County neighbors? Bring it to a solidarity meeting.',
+        _key: 's4', _type: 'ctaSection',
+        heading: 'WANT TO START A GROUP?',
+        note: 'Bring your idea to a solidarity meeting. If it aligns with our principles, we\'ll help you get it off the ground.',
         cta: JOIN,
       },
     ],
     seo: {
-      title: 'Current Projects | Door County Mutual Aid',
-      description: 'See what Door County Mutual Aid is working on — the Full Hearts Fridge, solidarity meetings, direct support, and community drives.',
+      title: 'Affiliate Groups | Door County Mutual Aid',
+      description: 'Working groups and affiliate projects operating under the Door County Mutual Aid Collective — including the Full Hearts Fridge and more.',
     },
   })
 
@@ -386,6 +391,71 @@ async function run() {
     seo: {
       title: 'Get Involved | Door County Mutual Aid',
       description: 'Volunteer, share supplies, join the email list, or request support. Every neighbor has something to give and something to receive.',
+    },
+  })
+
+  console.log('Writing contact page…')
+  await client.createOrReplace({
+    _id: 'page-contact',
+    _type: 'page',
+    title: 'Contact',
+    slug: { _type: 'slug', current: 'contact' },
+    sections: [
+      {
+        _key: 's1', _type: 'heroSection',
+        heading: 'Get in Touch',
+        tagline: 'WE READ EVERY MESSAGE. USUALLY RESPOND WITHIN A FEW DAYS.',
+      },
+      {
+        _key: 's2', _type: 'contactSectionBlock',
+        heading: 'Send us a message',
+      },
+    ],
+    seo: {
+      title: 'Contact | Door County Mutual Aid',
+      description: 'Send Door County Mutual Aid a message — for support requests, volunteering, donations, or general questions.',
+    },
+  })
+
+  console.log('Writing financials page…')
+  await client.createOrReplace({
+    _id: 'page-financials',
+    _type: 'page',
+    title: 'Financials',
+    slug: { _type: 'slug', current: 'financials' },
+    sections: [
+      {
+        _key: 's1', _type: 'heroSection',
+        heading: 'Financials',
+        tagline: 'TRANSPARENCY IS PART OF HOW WE BUILD TRUST.',
+      },
+      {
+        _key: 's2', _type: 'proseSection',
+        eyebrow: 'OUR COMMITMENT',
+        heading: 'Open books, open community',
+        body: 'Door County Mutual Aid Collective is a community-funded, community-run organization. We believe financial transparency is inseparable from our values of distributed power and collective accountability.\n\nAll funds received go directly toward our projects and direct support efforts. No salaries, no overhead — every dollar stays in the community. We publish summaries of income and expenses so members and neighbors can see exactly where resources flow.',
+      },
+      {
+        _key: 's3', _type: 'cardGridSection',
+        heading: 'WHERE MONEY GOES',
+        style: 'simple',
+        cards: [
+          { _key: 'c1', _type: 'card', title: 'Direct Support', body: 'Food boxes, supply drives, emergency assistance — funds go directly to neighbors in need.' },
+          { _key: 'c2', _type: 'card', title: 'Full Hearts Fridge', body: 'Refrigeration maintenance, food rescue coordination, and volunteer supplies.' },
+          { _key: 'c3', _type: 'card', title: 'Community Events', body: 'Meeting space, materials, and logistics for solidarity meetings and community actions.' },
+          { _key: 'c4', _type: 'card', title: 'Education & Outreach', body: 'Printing, signage, and digital tools that help spread the word and grow the network.' },
+        ],
+      },
+      {
+        _key: 's4', _type: 'ctaSection',
+        heading: 'QUESTIONS ABOUT OUR FINANCES?',
+        note: 'Ask at a solidarity meeting or send us a message. We\'re an open book.',
+        cta: { label: 'CONTACT US', href: '/contact' },
+      },
+    ],
+    seo: {
+      title: 'Financials | Door County Mutual Aid',
+      description: 'Financial transparency from Door County Mutual Aid — where money comes from and where it goes.',
     },
   })
 

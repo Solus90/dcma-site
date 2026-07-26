@@ -1,6 +1,5 @@
-import type { SiteSettings, HomePage, FridgePage, CmsPage, AboutPage } from '~/types/content'
+import type { SiteSettings, HomePage, FridgePage, CmsPage, AboutPage, Update } from '~/types/content'
 import { normalizeAboutPage, normalizeCmsPage, normalizeFridgePage, normalizeHomePage, normalizeSiteSettings } from '~/utils/contentDefaults'
-
 export const SITE_SETTINGS_QUERY = /* groq */ `*[_id == "siteSettings"][0]{
   orgName, "logoUrl": logo.asset->url, email, facebookUrl, address,
   meetingNote, joinCta, footerTagline, copyright,
@@ -96,6 +95,13 @@ export const ABOUT_QUERY = /* groq */ `*[_id == "aboutPage"][0]{
   securityMeetingsHeading, securityMeetingItems,
   seo }`
 
+export const UPDATES_QUERY = /* groq */ `*[_type == "update"] | order(publishedAt desc) {
+  _id, title, "slug": slug.current,
+  publishedAt, category, summary,
+  "imageUrl": image.asset->url,
+  "imageAlt": coalesce(image.alt, title),
+  cta }`
+
 function withNormalizedData<T>(
   query: ReturnType<typeof useSanityQuery<T>>,
   normalize: (data: T) => T,
@@ -125,3 +131,5 @@ export const useCmsPage = (slug: string) =>
 
 export const useAboutPage = () =>
   withNormalizedData(useSanityQuery<AboutPage>(ABOUT_QUERY), normalizeAboutPage)
+
+export const useUpdates = () => useSanityQuery<Update[]>(UPDATES_QUERY)
