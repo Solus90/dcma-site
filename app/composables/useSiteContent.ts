@@ -102,6 +102,13 @@ export const UPDATES_QUERY = /* groq */ `*[_type == "update"] | order(publishedA
   "imageAlt": coalesce(image.alt, title),
   cta }`
 
+export const LATEST_UPDATE_QUERY = /* groq */ `*[_type == "update"] | order(publishedAt desc) [0] {
+  _id, title, "slug": slug.current,
+  publishedAt, category, summary,
+  "imageUrl": image.asset->url,
+  "imageAlt": coalesce(image.alt, title),
+  cta }`
+
 function withNormalizedData<T>(
   query: ReturnType<typeof useSanityQuery<T>>,
   normalize: (data: T) => T,
@@ -133,3 +140,5 @@ export const useAboutPage = () =>
   withNormalizedData(useSanityQuery<AboutPage>(ABOUT_QUERY), normalizeAboutPage)
 
 export const useUpdates = () => useSanityQuery<Update[]>(UPDATES_QUERY)
+
+export const useLatestUpdate = () => useSanityQuery<Update | null>(LATEST_UPDATE_QUERY)
