@@ -1,6 +1,6 @@
 import { defineType, defineField } from 'sanity'
 
-const RESERVED_SLUGS = ['full-hearts-fridge', 'about', 'about-us', 'updates', 'projects', 'groups', 'api']
+const RESERVED_SLUGS = ['full-hearts-fridge', 'about', 'about-us', 'updates', 'groups', 'api']
 
 export default defineType({
   name: 'page',

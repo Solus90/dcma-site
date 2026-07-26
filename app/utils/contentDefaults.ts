@@ -14,8 +14,24 @@ import { DEFAULT_ABOUT_PAGE } from '~/utils/aboutPageDefaults'
 
 export const DEFAULT_NAV_LINKS: NavLink[] = [
   { label: 'Home', href: '/' },
-  { label: 'About', href: '/about' },
-  { label: 'Full Hearts Fridge', href: '/full-hearts-fridge' },
+  {
+    label: 'About Us',
+    href: '/about',
+    children: [
+      { label: 'Our Mission', href: '/about' },
+      { label: 'Financials', href: '/financials' },
+      { label: 'Contact', href: '/contact' },
+    ],
+  },
+  {
+    label: 'Projects',
+    href: '/projects',
+    children: [
+      { label: 'DCMA Projects', href: '/projects' },
+      { label: 'Updates', href: '/updates' },
+    ],
+  },
+  { label: 'Get Involved', href: '/get-involved' },
 ]
 
 export const DEFAULT_CONTACT_FORM: ContactFormCopy = {
