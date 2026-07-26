@@ -358,6 +358,7 @@ async function run() {
         style: 'default',
         cards: [
           { _key: 'p1', _type: 'card', title: 'Northern Door Activists', body: 'Grassroots organizing in northern Door County. Reach out through their channels to connect.', cta: { label: 'LEARN MORE', href: 'https://www.facebook.com/northerndooractivists' } },
+          { _key: 'p2', _type: 'card', title: 'Sturgeon Bay Food Rescue', body: 'Restaurant-to-pantry food rescue and gleaning program in partnership with LakeshoreCAP, housed at Destination Sturgeon Bay. Supported by a UW Green Bay nutrition master\'s thesis. Working toward a community fridge in Sturgeon Bay.' },
         ],
       },
       {
