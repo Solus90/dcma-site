@@ -47,7 +47,7 @@ describe('content defaults', () => {
       fridgeShell: null as unknown as SiteSettings['fridgeShell'],
     })
 
-    expect(settings.navLinks).toHaveLength(3)
+    expect(settings.navLinks).toHaveLength(4)
     expect(settings.errorPage.backHomeLabel).toBe('Back home')
     expect(settings.fridgeShell.loadingMessage).toContain('Fetching')
   })
