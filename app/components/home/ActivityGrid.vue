@@ -38,12 +38,12 @@ defineProps<{ heading: string; activities: Card[] }>()
 .items article { display: flex; flex-direction: column; gap: 0.75rem; }
 .photo {
   width: 100%;
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 1 / 1;
   object-fit: cover;
   display: block;
 }
 .items h3 { margin: 0; font-size: 1.3rem; }
-.items p { margin: 0; }
+.items p { margin: 0; flex: 1; }
 .card-link {
   display: inline-block;
   margin-top: 0.25rem;
