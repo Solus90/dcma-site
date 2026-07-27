@@ -39,7 +39,8 @@ defineProps<{ heading: string; activities: Card[] }>()
 .photo {
   width: 100%;
   aspect-ratio: 1 / 1;
-  object-fit: cover;
+  object-fit: contain;
+  background: var(--cream);
   display: block;
 }
 .items h3 { margin: 0; font-size: 1.3rem; }
