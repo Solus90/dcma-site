@@ -142,6 +142,6 @@ export const useCmsPage = (slug: string) =>
 export const useAboutPage = () =>
   withNormalizedData(useSanityQuery<AboutPage>(ABOUT_QUERY), normalizeAboutPage)
 
-export const useUpdates = () => useSanityQuery<Update[]>(UPDATES_QUERY)
+export const useUpdates = () => withNormalizedData(useSanityQuery<Update[]>(UPDATES_QUERY), d => d)
 
 export const useLatestUpdate = () => useSanityQuery<Update | null>(LATEST_UPDATE_QUERY)

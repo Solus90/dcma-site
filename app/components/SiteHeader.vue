@@ -151,7 +151,7 @@ nav > a:focus-visible,
 .dropdown-menu {
   display: none;
   position: absolute;
-  top: calc(100% + 4px);
+  top: 100%;
   left: 50%;
   transform: translateX(-50%);
   min-width: 11rem;
@@ -161,6 +161,7 @@ nav > a:focus-visible,
   list-style: none;
   margin: 0;
   padding: 0.35rem 0;
+  padding-top: calc(0.35rem + 4px);
   z-index: 100;
 }
 
