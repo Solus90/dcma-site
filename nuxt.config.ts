@@ -29,6 +29,7 @@ export default defineNuxtConfig({
     '/about': { prerender: true },
     '/projects': { prerender: true },
     '/projects/full-hearts-fridge': { prerender: true },
+    '/updates': { prerender: true },
     '/full-hearts-fridge': { redirect: { to: '/projects/full-hearts-fridge', statusCode: 301 } },
     '/about-us': { redirect: { to: '/projects/full-hearts-fridge', statusCode: 301 } },
   },
