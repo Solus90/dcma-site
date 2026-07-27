@@ -17,6 +17,8 @@ defineProps<{ heading: string; activities: Card[] }>()
         >
         <h3>{{ a.title }}</h3>
         <p>{{ a.body }}</p>
+        <NuxtLink v-if="a.cta?.href?.startsWith('/')" :to="a.cta.href" class="card-link">{{ a.cta.label }}</NuxtLink>
+        <a v-else-if="a.cta?.href" :href="a.cta.href" class="card-link">{{ a.cta.label }}</a>
       </article>
     </div>
   </section>
@@ -42,4 +44,18 @@ defineProps<{ heading: string; activities: Card[] }>()
 }
 .items h3 { margin: 0; font-size: 1.3rem; }
 .items p { margin: 0; }
+.card-link {
+  display: inline-block;
+  margin-top: 0.25rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--navy);
+  text-decoration: none;
+  padding-bottom: 2px;
+  border-bottom: 2px solid currentColor;
+}
+.card-link:hover { opacity: 0.7; }
+.card-link:focus-visible { outline: 3px solid var(--navy); outline-offset: 2px; }
 </style>

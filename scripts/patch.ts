@@ -109,24 +109,59 @@ async function run() {
     console.log('  ✓ projects page cards updated')
   }
 
-  // ── 4. Fridge hero image ────────────────────────────────────────────────────
+  // ── 4 & 5. Fridge hero image + projects page card image ────────────────────
   const fridgeHeroPath = join(ROOT, 'assets/source/Food_Rescue.avif')
   if (existsSync(fridgeHeroPath)) {
-    console.log('Uploading fridge hero image…')
+    console.log('Uploading Food_Rescue.avif…')
     const asset = await client.assets.upload('image', createReadStream(fridgeHeroPath), {
       filename: 'Food_Rescue.avif',
     })
-    await client.patch('fridgePage').set({
-      heroImage: {
-        _type: 'image',
-        asset: { _type: 'reference', _ref: asset._id },
-        alt: 'Volunteers unload rescued food donations',
-      },
-    }).commit()
+    const imageRef = {
+      _type: 'image',
+      asset: { _type: 'reference', _ref: asset._id },
+      alt: 'Volunteers unload rescued food donations',
+    }
+
+    await client.patch('fridgePage').set({ heroImage: imageRef }).commit()
     console.log('  ✓ fridgePage heroImage updated')
+
+    // Update the Full Hearts Fridge card image on the projects page
+    console.log('Patching projects page Full Hearts Fridge card image…')
+    const projectsDoc = await client.fetch<{
+      sections: { _key: string; _type: string; cards?: { _key: string; [k: string]: unknown }[] }[]
+    }>(`*[_id == "page-projects"][0]{ sections }`)
+
+    if (projectsDoc?.sections) {
+      const patchedSections = projectsDoc.sections.map(section => ({
+        ...section,
+        ...(section.cards
+          ? {
+              cards: section.cards.map(card =>
+                card._key === 'c1' ? { ...card, image: imageRef } : card,
+              ),
+            }
+          : {}),
+      }))
+      await client.patch('page-projects').set({ sections: patchedSections }).commit()
+      console.log('  ✓ projects page Full Hearts Fridge card image updated')
+    }
+
+    // Also update the Full Hearts Fridge card image in homePage activities
+    console.log('Patching homePage Full Hearts Fridge activity card image…')
+    const homeDoc = await client.fetch<{
+      activities: { _key: string; [k: string]: unknown }[]
+    }>(`*[_id == "homePage"][0]{ activities }`)
+
+    if (homeDoc?.activities) {
+      const patchedActivities = homeDoc.activities.map(card =>
+        card._key === 'a1' ? { ...card, image: imageRef } : card,
+      )
+      await client.patch('homePage').set({ activities: patchedActivities }).commit()
+      console.log('  ✓ homePage Full Hearts Fridge activity card image updated')
+    }
   }
   else {
-    console.warn('  ⚠ Food_Rescue.avif not found at assets/source — skipping hero image')
+    console.warn('  ⚠ Food_Rescue.avif not found at assets/source — skipping image patches')
   }
 
   console.log('\nDone. All patches applied.')
