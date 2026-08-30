@@ -10,6 +10,7 @@
     "postinstall": "nuxt prepare",
     "seed": "tsx scripts/seed.ts",
     "seed:mutual-aid": "tsx scripts/seed-mutual-aid.ts",
+    "seed:updates": "tsx scripts/seed-updates.ts",
     "patch": "tsx scripts/patch.ts",
     "test": "vitest run"
   },
