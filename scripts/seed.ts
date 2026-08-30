@@ -6,6 +6,7 @@ import { join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { DEFAULT_ABOUT_PAGE } from '../app/utils/aboutPageDefaults.ts'
 import { DEFAULT_MUTUAL_AID_PAGE } from '../app/utils/mutualAidPageDefaults.ts'
+import { DEFAULT_UPDATES_PAGE } from '../app/utils/updatesPageDefaults.ts'
 
 const ROOT = join(fileURLToPath(new URL('.', import.meta.url)), '..')
 const STOCK_DIR = join(ROOT, 'assets/stock')
@@ -325,6 +326,18 @@ async function run() {
     ctaBody: M.ctaBody,
     cta: { ...M.cta },
     seo: { ...M.seo },
+  })
+
+  console.log('Writing updatesPage…')
+  await client.createOrReplace({
+    _id: 'updatesPage',
+    _type: 'updatesPage',
+    heroEyebrow: DEFAULT_UPDATES_PAGE.heroEyebrow,
+    heroHeading: DEFAULT_UPDATES_PAGE.heroHeading,
+    lede: DEFAULT_UPDATES_PAGE.lede,
+    listAriaLabel: DEFAULT_UPDATES_PAGE.listAriaLabel,
+    emptyMessage: DEFAULT_UPDATES_PAGE.emptyMessage,
+    seo: { ...DEFAULT_UPDATES_PAGE.seo },
   })
 
   console.log('Writing projects page…')
