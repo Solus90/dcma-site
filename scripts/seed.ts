@@ -5,6 +5,7 @@ import { createReadStream, existsSync, readFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { DEFAULT_ABOUT_PAGE } from '../app/utils/aboutPageDefaults.ts'
+import { DEFAULT_MUTUAL_AID_PAGE } from '../app/utils/mutualAidPageDefaults.ts'
 
 const ROOT = join(fileURLToPath(new URL('.', import.meta.url)), '..')
 const STOCK_DIR = join(ROOT, 'assets/stock')
@@ -61,6 +62,7 @@ const NAV = [
       { _key: 'contact', label: 'Contact', href: '/contact' },
     ],
   },
+  { _key: 'what-is-mutual-aid', label: 'What Is Mutual Aid', href: '/what-is-mutual-aid' },
   {
     _key: 'projects',
     label: 'Projects',
@@ -288,47 +290,41 @@ async function run() {
     seo: { ...DEFAULT_ABOUT_PAGE.seo },
   })
 
-  console.log('Writing what-is-mutual-aid page…')
+  console.log('Writing mutualAidPage…')
+  const M = DEFAULT_MUTUAL_AID_PAGE
+  // Retire the old generic "page" version; the dedicated singleton + /what-is-mutual-aid route replace it.
+  await client.delete('page-what-is-mutual-aid').catch(() => {})
   await client.createOrReplace({
-    _id: 'page-what-is-mutual-aid',
-    _type: 'page',
-    title: 'What Is Mutual Aid',
-    slug: { _type: 'slug', current: 'what-is-mutual-aid' },
-    sections: [
-      {
-        _key: 's1', _type: 'heroSection',
-        heading: 'What Is Mutual Aid?',
-        tagline: 'NOT CHARITY. NOT GOVERNMENT. NEIGHBORS TAKING CARE OF NEIGHBORS.',
-      },
-      {
-        _key: 's2', _type: 'proseSection',
-        eyebrow: 'THE IDEA',
-        heading: 'Direct support without gatekeepers',
-        body: 'Mutual aid is a form of political participation where people take responsibility for caring for one another — not through symbolic acts or petitions, but by actually meeting each other\'s needs. It\'s older than charity and more direct than most social services.\n\nWhen neighbors share food, rides, tools, and time outside of market logic and without applications or income verification, that is mutual aid. The relationship is horizontal — giving and receiving happen in both directions. Everyone has something to offer. Everyone has something to receive.',
-      },
-      {
-        _key: 's3', _type: 'cardGridSection',
-        heading: 'How It\'s Different',
-        style: 'simple',
-        cards: [
-          { _key: 'c1', _type: 'card', title: 'Not charity', body: 'Charity flows one way — donor to recipient. Mutual aid assumes everyone has something to offer and something to receive.' },
-          { _key: 'c2', _type: 'card', title: 'Not social services', body: 'No intake forms, income verification, or eligibility tests. If you need something, you can ask. Full stop.' },
-          { _key: 'c3', _type: 'card', title: 'Not just volunteering', body: 'Volunteers donate time to an organization. In mutual aid, you\'re part of a network — a neighbor, not a helper.' },
-          { _key: 'c4', _type: 'card', title: 'Solidarity, not pity', body: 'The goal isn\'t to feel good about helping — it\'s to build a community where people are genuinely taken care of.' },
-        ],
-      },
-      {
-        _key: 's4', _type: 'ctaSection',
-        heading: 'READY TO SHOW UP?',
-        note: 'Join the network and get connected with neighbors.',
-        cta: JOIN,
-        secondaryCta: REQUEST,
-      },
-    ],
-    seo: {
-      title: 'What Is Mutual Aid | Door County Mutual Aid',
-      description: 'Learn what mutual aid means, how it\'s different from charity, and how Door County neighbors support each other directly.',
-    },
+    _id: 'mutualAidPage',
+    _type: 'mutualAidPage',
+    heroEyebrow: M.heroEyebrow,
+    heroHeading: M.heroHeading,
+    lede: M.lede,
+    kropotkinHook: M.kropotkinHook,
+    solidarityHeading: M.solidarityHeading,
+    solidarityParagraphs: [...M.solidarityParagraphs],
+    whyHeading: M.whyHeading,
+    whyParagraphs: [...M.whyParagraphs],
+    looksLikeHeading: M.looksLikeHeading,
+    looksLikeIntro: M.looksLikeIntro,
+    looksLikeItems: [...M.looksLikeItems],
+    looksLikeOutro: M.looksLikeOutro,
+    looksLikeCta: { ...M.looksLikeCta },
+    organizedHeading: M.organizedHeading,
+    organizedParagraphs: [...M.organizedParagraphs],
+    securityCta: { ...M.securityCta },
+    questionsHeading: M.questionsHeading,
+    questions: M.questions.map((q, i) => ({ _key: `q-${i}`, _type: 'mutualAidQuestion' as const, ...q })),
+    readingHeading: M.readingHeading,
+    readingIntro: M.readingIntro,
+    readingNote: M.readingNote,
+    books: M.books.map((b, i) => ({ _key: `book-${i}`, _type: 'mutualAidBook' as const, ...b })),
+    readingClosing: M.readingClosing,
+    readingCta: { ...M.readingCta },
+    ctaHeading: M.ctaHeading,
+    ctaBody: M.ctaBody,
+    cta: { ...M.cta },
+    seo: { ...M.seo },
   })
 
   console.log('Writing projects page…')

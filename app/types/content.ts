@@ -202,6 +202,50 @@ export interface AboutTextItem {
   body: string
 }
 
+export interface MutualAidBook {
+  title: string
+  author: string
+  difficulty: 'Lighter' | 'Moderate' | 'Heavier'
+  length: string
+  summary: string
+}
+
+export interface MutualAidQuestion {
+  question: string
+  answer: string
+}
+
+export interface MutualAidPage {
+  heroEyebrow: string
+  heroHeading: string
+  lede: string
+  kropotkinHook: string
+  solidarityHeading: string
+  solidarityParagraphs: string[]
+  whyHeading: string
+  whyParagraphs: string[]
+  looksLikeHeading: string
+  looksLikeIntro: string
+  looksLikeItems: string[]
+  looksLikeOutro: string
+  looksLikeCta: Cta
+  organizedHeading: string
+  organizedParagraphs: string[]
+  securityCta: Cta
+  questionsHeading: string
+  questions: MutualAidQuestion[]
+  readingHeading: string
+  readingIntro: string
+  readingNote: string
+  books: MutualAidBook[]
+  readingClosing: string
+  readingCta: Cta
+  ctaHeading: string
+  ctaBody: string
+  cta: Cta
+  seo: { title: string; description: string }
+}
+
 export interface Update {
   _id: string
   title: string

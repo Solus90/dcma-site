@@ -2,6 +2,7 @@ import siteSettings from './siteSettings'
 import homePage from './homePage'
 import fridgePage from './fridgePage'
 import aboutPage, { aboutTextItem, aboutTocItem } from './aboutPage'
+import mutualAidPage, { mutualAidBook, mutualAidQuestion } from './mutualAidPage'
 import page from './page'
 import update from './update'
 import contactSubmission from './contactSubmission'
@@ -13,12 +14,15 @@ export const schemaTypes = [
   homePage,
   fridgePage,
   aboutPage,
+  mutualAidPage,
   page,
   update,
   contactSubmission,
   ...pageSectionTypes,
   aboutTextItem,
   aboutTocItem,
+  mutualAidBook,
+  mutualAidQuestion,
   cta,
   card,
   navLink,
