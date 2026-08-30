@@ -35,11 +35,21 @@ Not built. For out-of-area visitors who find DCMA and want their own local netwo
 
 ## Tooling / infra
 
-### Sanity Studio build is very slow
-Observed ~11.5 minutes for `sanity deploy` on the current machine (688807 ms for the build step alone). Full Vite production build of the whole Studio toolkit, no incremental deploy. Worth: checking the Vite cache is being reused, trimming unused plugins, or moving the Studio deploy into CI so it's not a local blocker.
+### Content publishes don't reach the live site
+**This is the big one.** Every content page is `prerender: true` — static HTML frozen at build time. There's no `swr`/`isr` route rule, no `vercel.json`, and no Vercel Deploy Hook / Sanity webhook in the repo (`CUTOVER.md` lists the webhook as an unfinished TODO). So editing and publishing in the Studio does **nothing** to the live site until the next Vercel deploy (i.e. the next code merge to `main`, which re-fetches all content).
 
-### Local `sanity` binary hangs on deploy
-`pnpm run deploy` (which runs `studio/node_modules/.bin/sanity deploy`) hung with no output; the globally-installed `sanity` CLI worked. Possible version mismatch between the local dep and the global install. Until sorted, deploy with the global CLI from inside `studio/`.
+Fix, pick one:
+- **Vercel Deploy Hook + Sanity webhook** (recommended): create a Deploy Hook URL in the Vercel project, add a Sanity webhook that POSTs to it on document publish. "Editor publishes → site rebuilds." ~10 min, no code. Needs someone with Vercel project-settings access to make the hook, and Sanity admin to make the webhook.
+- **SWR route rules** (`routeRules: { '/updates': { swr: 900 }, ... }` in `nuxt.config.ts`): content refreshes on a timer without a full rebuild. Pure code PR, no dashboard access. Adds a Sanity CDN hit per cache-miss + Vercel function invocations — negligible at this traffic.
 
-### Content-publish rebuild hook
-Noted in `CUTOVER.md` too: set up a Vercel Deploy Hook + Sanity webhook so publishing content in the Studio triggers a site rebuild, instead of relying on the next code push.
+### Studio deploy is fragile — move it to CI
+Deploying the Studio (`sanity deploy` from `studio/`) has hit, in one session:
+- Wrong-directory `ProjectRootNotFoundError` (must run from `studio/`, not repo root)
+- `uploadSchema is not a function` — CLI newer than the `sanity` package in `studio/node_modules`; fixed by `npm install sanity@latest @sanity/cli@latest` in `studio/`
+- `TypeError: Cannot read properties of null (reading 'useMemoCache')` spam during "Generating studio manifest" — `studio/node_modules/react` conflicts with the pnpm-hoisted `react-dom@19.2.7` in the root `node_modules`. Non-fatal (schema still deployed), but noisy and a sign the React versions across the workspace + `studio/` package-lock aren't pinned together.
+- Build time swung from ~1.5s to ~11min depending on cache state.
+
+The studio has its own `package-lock.json` (npm) inside a pnpm workspace — that split is probably the root of the version drift. Worth: dedupe React across the workspace, pin `sanity`/`@sanity/cli` together, and add a `.github/workflows/studio-deploy.yml` that runs `sanity deploy` on push to `main` when `studio/**` changes (needs a `SANITY_DEPLOY_TOKEN` GitHub secret). Optionally a PR check that runs `sanity schema validate` on `studio/**` changes.
+
+### Sanity Studio build is very slow (sometimes)
+Observed 688807 ms for the "Build Sanity Studio" step once; other runs finished in ~1.5s. Full Vite production build of the whole Studio toolkit, no incremental deploy. The slow runs were likely cold `npx`/dependency downloads. Moving the deploy to CI (above) makes this a non-issue locally.
