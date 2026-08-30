@@ -138,6 +138,21 @@ async function withNormalizedData<T>(
   return { ...query, data }
 }
 
+// Like withNormalizedData, but the normalizer is always called — a missing
+// document yields the full code defaults instead of null. Use for singletons
+// that ship default copy (about, what-is-mutual-aid, updates chrome), so the
+// page still renders before anyone creates the doc in the CMS.
+async function withDefaults<T>(
+  query: ReturnType<typeof useSanityQuery<T>>,
+  normalize: (data: T | null | undefined) => T,
+) {
+  await query
+
+  const data = computed(() => normalize(query.data.value))
+
+  return { ...query, data }
+}
+
 export const useSiteSettings = () =>
   withNormalizedData(useSanityQuery<SiteSettings>(SITE_SETTINGS_QUERY), normalizeSiteSettings)
 
@@ -154,10 +169,10 @@ export const useCmsPage = (slug: string) =>
   )
 
 export const useAboutPage = () =>
-  withNormalizedData(useSanityQuery<AboutPage>(ABOUT_QUERY), normalizeAboutPage)
+  withDefaults(useSanityQuery<AboutPage>(ABOUT_QUERY), normalizeAboutPage)
 
 export const useMutualAidPage = () =>
-  withNormalizedData(useSanityQuery<MutualAidPage>(MUTUAL_AID_QUERY), normalizeMutualAidPage)
+  withDefaults(useSanityQuery<MutualAidPage>(MUTUAL_AID_QUERY), normalizeMutualAidPage)
 
 export const useUpdates = () => withNormalizedData(useSanityQuery<Update[]>(UPDATES_QUERY), d => d)
 
