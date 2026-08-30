@@ -7,6 +7,22 @@ useSeoMeta({
   description: () => page.value.seo.description,
 })
 
+// This page is prerendered, so "now" is frozen at build time on the server.
+// Re-evaluate on the client after mount so the upcoming/past split stays correct
+// as days pass between deploys.
+const now = ref(new Date())
+onMounted(() => { now.value = new Date() })
+
+const todayIso = computed(() =>
+  now.value.toLocaleDateString('en-CA', { timeZone: 'America/Chicago' }),
+)
+
+const split = computed(() => splitUpdates(updates.value ?? [], todayIso.value))
+const upcomingEvents = computed(() => split.value.upcoming)
+const pastUpdates = computed(() => split.value.past)
+
+const hasNothing = computed(() => !upcomingEvents.value.length && !pastUpdates.value.length)
+
 function formatDate(iso: string) {
   return new Date(iso).toLocaleDateString('en-US', {
     year: 'numeric',
@@ -14,6 +30,10 @@ function formatDate(iso: string) {
     day: 'numeric',
     timeZone: 'UTC',
   })
+}
+
+function datePart(iso: string, opt: Intl.DateTimeFormatOptions) {
+  return new Date(iso).toLocaleDateString('en-US', { ...opt, timeZone: 'UTC' })
 }
 </script>
 
@@ -25,33 +45,65 @@ function formatDate(iso: string) {
       <p class="lede">{{ page.lede }}</p>
     </header>
 
-    <section class="updates-grid" :aria-label="page.listAriaLabel">
-      <template v-if="updates && updates.length">
-        <article v-for="update in updates" :key="update._id" class="update-card">
-          <div v-if="update.imageUrl" class="card-media">
-            <img
-              :src="update.imageUrl"
-              :alt="update.imageAlt || update.title"
-              loading="lazy"
-              class="card-img"
-            >
+    <section v-if="upcomingEvents.length" class="agenda-section" aria-labelledby="agenda-heading">
+      <h2 id="agenda-heading" class="section-heading">Upcoming events</h2>
+      <ol class="agenda">
+        <li v-for="event in upcomingEvents" :key="event._id" class="agenda-item">
+          <div class="agenda-rail" aria-hidden="true">
+            <span class="agenda-weekday">{{ datePart(event.publishedAt, { weekday: 'short' }) }}</span>
+            <span class="agenda-daynum">{{ datePart(event.publishedAt, { day: 'numeric' }) }}</span>
+            <span class="agenda-month">{{ datePart(event.publishedAt, { month: 'short' }) }}</span>
           </div>
-          <div class="card-body">
-            <div class="card-meta">
-              <span v-if="update.category" class="badge">{{ update.category }}</span>
-              <time :datetime="update.publishedAt">{{ formatDate(update.publishedAt) }}</time>
-            </div>
-            <h2 class="card-title">{{ update.title }}</h2>
-            <p class="card-summary">{{ update.summary }}</p>
+          <div class="agenda-body">
+            <time :datetime="event.publishedAt" class="sr-only">{{ formatDate(event.publishedAt) }}</time>
+            <h3 class="agenda-title">{{ event.title }}</h3>
+            <p class="agenda-summary">{{ event.summary }}</p>
             <a
-              v-if="update.cta"
-              :href="update.cta.href"
-              class="card-link"
-            >{{ update.cta.label }}</a>
+              v-if="event.cta"
+              :href="event.cta.href"
+              class="agenda-link"
+            >{{ event.cta.label }}</a>
           </div>
-        </article>
-      </template>
-      <p v-else class="empty">{{ page.emptyMessage }}</p>
+        </li>
+      </ol>
+    </section>
+
+    <section
+      v-if="pastUpdates.length || hasNothing"
+      class="updates-section"
+      aria-labelledby="updates-heading"
+    >
+      <h2 id="updates-heading" class="section-heading">
+        {{ upcomingEvents.length ? 'Latest updates' : page.listAriaLabel }}
+      </h2>
+      <div class="updates-grid">
+        <template v-if="pastUpdates.length">
+          <article v-for="update in pastUpdates" :key="update._id" class="update-card">
+            <div v-if="update.imageUrl" class="card-media">
+              <img
+                :src="update.imageUrl"
+                :alt="update.imageAlt || update.title"
+                loading="lazy"
+                class="card-img"
+              >
+            </div>
+            <div class="card-body">
+              <div class="card-meta">
+                <span v-if="update.category" class="badge">{{ update.category }}</span>
+                <time :datetime="update.publishedAt">{{ formatDate(update.publishedAt) }}</time>
+              </div>
+              <h3 class="card-title">{{ update.title }}</h3>
+              <p class="card-summary">{{ update.summary }}</p>
+              <a
+                v-if="update.cta"
+                :href="update.cta.href"
+                class="card-link"
+              >{{ update.cta.label }}</a>
+            </div>
+          </article>
+        </template>
+        <p v-else class="empty">{{ page.emptyMessage }}</p>
+      </div>
     </section>
   </main>
 </template>
@@ -59,6 +111,18 @@ function formatDate(iso: string) {
 <style scoped>
 .updates-page {
   padding-bottom: 5rem;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 .page-hero {
@@ -82,10 +146,114 @@ function formatDate(iso: string) {
   text-wrap: pretty;
 }
 
-.updates-grid {
+.section-heading {
+  font-size: clamp(1.5rem, 4vw, 2.25rem);
+  font-weight: 900;
+  font-stretch: expanded;
+  line-height: 1.15;
+  margin: 0 0 1.5rem;
+  text-wrap: balance;
+}
+
+/* ── Upcoming events agenda ── */
+.agenda-section {
   max-width: 72rem;
   margin-inline: auto;
   padding: 3rem 2rem 0;
+}
+
+.agenda {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--hairline);
+}
+
+.agenda-item {
+  display: grid;
+  grid-template-columns: 4.5rem 1fr;
+  gap: 1.5rem;
+  padding: 1.5rem 0;
+  border-bottom: 1px solid var(--hairline);
+}
+
+.agenda-rail {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding-top: 0.15rem;
+  color: var(--navy);
+}
+
+.agenda-weekday {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 700;
+}
+
+.agenda-daynum {
+  font-size: 1.9rem;
+  font-weight: 900;
+  font-stretch: expanded;
+  line-height: 1;
+}
+
+.agenda-month {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 700;
+}
+
+.agenda-title {
+  font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+  font-weight: 900;
+  font-stretch: expanded;
+  line-height: 1.2;
+  margin: 0 0 0.5rem;
+  text-wrap: balance;
+}
+
+.agenda-summary {
+  font-size: 0.95rem;
+  line-height: 1.65;
+  margin: 0;
+  max-width: 60ch;
+  text-wrap: pretty;
+}
+
+.agenda-link {
+  display: inline-block;
+  margin-top: 1rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--navy);
+  text-decoration: none;
+  padding-bottom: 2px;
+  border-bottom: 2px solid currentColor;
+}
+
+.agenda-link:hover {
+  opacity: 0.7;
+}
+
+.agenda-link:focus-visible {
+  outline: 3px solid var(--navy);
+  outline-offset: 2px;
+}
+
+/* ── Latest updates grid ── */
+.updates-section {
+  max-width: 72rem;
+  margin-inline: auto;
+  padding: 3rem 2rem 0;
+}
+
+.updates-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(min(100%, 22rem), 1fr));
   gap: 2rem;
@@ -188,8 +356,21 @@ function formatDate(iso: string) {
     padding: 3rem 1.25rem 2rem;
   }
 
-  .updates-grid {
+  .agenda-section,
+  .updates-section {
     padding-inline: 1.25rem;
+  }
+
+  .agenda-item {
+    grid-template-columns: 3.5rem 1fr;
+    gap: 1rem;
+  }
+
+  .agenda-daynum {
+    font-size: 1.6rem;
+  }
+
+  .updates-grid {
     grid-template-columns: 1fr;
   }
 }
