@@ -2,7 +2,7 @@ import { defineConfig } from 'sanity'
 import { structureTool } from 'sanity/structure'
 import { schemaTypes } from './schemaTypes'
 
-const singletons = ['siteSettings', 'homePage', 'fridgePage', 'aboutPage', 'mutualAidPage']
+const singletons = ['siteSettings', 'homePage', 'fridgePage', 'aboutPage', 'mutualAidPage', 'updatesPage']
 
 export default defineConfig({
   name: 'default',
@@ -30,7 +30,18 @@ export default defineConfig({
             S.listItem().title('What Is Mutual Aid Page').child(
               S.document().schemaType('mutualAidPage').documentId('mutualAidPage'),
             ),
+            S.listItem().title('Updates Page').child(
+              S.document().schemaType('updatesPage').documentId('updatesPage'),
+            ),
             S.divider(),
+            S.listItem()
+              .title('Updates')
+              .schemaType('update')
+              .child(
+                S.documentTypeList('update')
+                  .title('Updates')
+                  .defaultOrdering([{ field: 'publishedAt', direction: 'desc' }]),
+              ),
             S.listItem()
               .title('Pages')
               .schemaType('page')
