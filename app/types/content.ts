@@ -258,6 +258,15 @@ export interface Update {
   cta?: Cta
 }
 
+export interface UpdatesPage {
+  heroEyebrow: string
+  heroHeading: string
+  lede: string
+  listAriaLabel: string
+  emptyMessage: string
+  seo: { title: string; description: string }
+}
+
 export interface AboutPage {
   heroEyebrow: string
   heroHeading: string

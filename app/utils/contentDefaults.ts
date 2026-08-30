@@ -10,9 +10,11 @@ import type {
   NavLink,
   SiteSettings,
   StatsSection,
+  UpdatesPage,
 } from '~/types/content'
 import { DEFAULT_ABOUT_PAGE } from '~/utils/aboutPageDefaults'
 import { DEFAULT_MUTUAL_AID_PAGE } from '~/utils/mutualAidPageDefaults'
+import { DEFAULT_UPDATES_PAGE } from '~/utils/updatesPageDefaults'
 
 export const DEFAULT_NAV_LINKS: NavLink[] = [
   { label: 'Home', href: '/' },
@@ -151,6 +153,16 @@ export function normalizeAboutPage(data: Partial<AboutPage> | null | undefined):
     securityItems: pickArray(data.securityItems, defaults.securityItems),
     securityConfrontationalItems: pickArray(data.securityConfrontationalItems, defaults.securityConfrontationalItems),
     securityMeetingItems: pickArray(data.securityMeetingItems, defaults.securityMeetingItems),
+    seo: mergeRecords(defaults.seo, data.seo),
+  }
+}
+
+export function normalizeUpdatesPage(data: Partial<UpdatesPage> | null | undefined): UpdatesPage {
+  const defaults = DEFAULT_UPDATES_PAGE as UpdatesPage
+  if (!data) return defaults
+
+  return {
+    ...mergeRecords(defaults, data),
     seo: mergeRecords(defaults.seo, data.seo),
   }
 }
