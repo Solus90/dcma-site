@@ -1,9 +1,10 @@
 <script setup lang="ts">
+const { data: page } = await useUpdatesPage()
 const { data: updates } = await useUpdates()
 
 useSeoMeta({
-  title: 'Updates | Door County Mutual Aid',
-  description: 'Upcoming events, announcements, and news from the Door County Mutual Aid network.',
+  title: () => page.value.seo.title,
+  description: () => page.value.seo.description,
 })
 
 function formatDate(iso: string) {
@@ -19,12 +20,12 @@ function formatDate(iso: string) {
 <template>
   <main id="main-content" class="updates-page">
     <header class="page-hero">
-      <p class="eyebrow">Door County Mutual Aid</p>
-      <h1 class="display">Updates</h1>
-      <p class="lede">Events, announcements, and news from the network.</p>
+      <p class="eyebrow">{{ page.heroEyebrow }}</p>
+      <h1 class="display">{{ page.heroHeading }}</h1>
+      <p class="lede">{{ page.lede }}</p>
     </header>
 
-    <section class="updates-grid" aria-label="Updates">
+    <section class="updates-grid" :aria-label="page.listAriaLabel">
       <template v-if="updates && updates.length">
         <article v-for="update in updates" :key="update._id" class="update-card">
           <div v-if="update.imageUrl" class="card-media">
@@ -50,7 +51,7 @@ function formatDate(iso: string) {
           </div>
         </article>
       </template>
-      <p v-else class="empty">No updates yet — check back soon.</p>
+      <p v-else class="empty">{{ page.emptyMessage }}</p>
     </section>
   </main>
 </template>

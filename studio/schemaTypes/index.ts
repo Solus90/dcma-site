@@ -5,6 +5,7 @@ import aboutPage, { aboutTextItem, aboutTocItem } from './aboutPage'
 import mutualAidPage, { mutualAidBook, mutualAidQuestion } from './mutualAidPage'
 import page from './page'
 import update from './update'
+import updatesPage from './updatesPage'
 import contactSubmission from './contactSubmission'
 import { cta, card, navLink, contactFormCopy, errorPageCopy } from './objects'
 import { pageSectionTypes } from './pageSections'
@@ -15,6 +16,7 @@ export const schemaTypes = [
   fridgePage,
   aboutPage,
   mutualAidPage,
+  updatesPage,
   page,
   update,
   contactSubmission,

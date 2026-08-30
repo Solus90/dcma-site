@@ -1,5 +1,5 @@
-import type { SiteSettings, HomePage, FridgePage, CmsPage, AboutPage, MutualAidPage, Update } from '~/types/content'
-import { normalizeAboutPage, normalizeCmsPage, normalizeFridgePage, normalizeHomePage, normalizeMutualAidPage, normalizeSiteSettings } from '~/utils/contentDefaults'
+import type { SiteSettings, HomePage, FridgePage, CmsPage, AboutPage, MutualAidPage, UpdatesPage, Update } from '~/types/content'
+import { normalizeAboutPage, normalizeCmsPage, normalizeFridgePage, normalizeHomePage, normalizeMutualAidPage, normalizeSiteSettings, normalizeUpdatesPage } from '~/utils/contentDefaults'
 export const SITE_SETTINGS_QUERY = /* groq */ `*[_id == "siteSettings"][0]{
   orgName, "logoUrl": logo.asset->url, email, facebookUrl, address,
   meetingNote, joinCta, footerTagline, copyright,
@@ -109,6 +109,9 @@ export const MUTUAL_AID_QUERY = /* groq */ `*[_id == "mutualAidPage"][0]{
   ctaHeading, ctaBody, cta,
   seo }`
 
+export const UPDATES_PAGE_QUERY = /* groq */ `*[_id == "updatesPage"][0]{
+  heroEyebrow, heroHeading, lede, listAriaLabel, emptyMessage, seo }`
+
 export const UPDATES_QUERY = /* groq */ `*[_type == "update"] | order(publishedAt desc) {
   _id, title, "slug": slug.current,
   publishedAt, category, summary,
@@ -173,6 +176,9 @@ export const useAboutPage = () =>
 
 export const useMutualAidPage = () =>
   withDefaults(useSanityQuery<MutualAidPage>(MUTUAL_AID_QUERY), normalizeMutualAidPage)
+
+export const useUpdatesPage = () =>
+  withDefaults(useSanityQuery<UpdatesPage>(UPDATES_PAGE_QUERY), normalizeUpdatesPage)
 
 export const useUpdates = () => withNormalizedData(useSanityQuery<Update[]>(UPDATES_QUERY), d => d)
 
