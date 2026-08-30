@@ -6,11 +6,13 @@ import type {
   FridgePage,
   FridgeShellCopy,
   HomePage,
+  MutualAidPage,
   NavLink,
   SiteSettings,
   StatsSection,
 } from '~/types/content'
 import { DEFAULT_ABOUT_PAGE } from '~/utils/aboutPageDefaults'
+import { DEFAULT_MUTUAL_AID_PAGE } from '~/utils/mutualAidPageDefaults'
 
 export const DEFAULT_NAV_LINKS: NavLink[] = [
   { label: 'Home', href: '/' },
@@ -23,6 +25,7 @@ export const DEFAULT_NAV_LINKS: NavLink[] = [
       { label: 'Contact', href: '/contact' },
     ],
   },
+  { label: 'What Is Mutual Aid', href: '/what-is-mutual-aid' },
   {
     label: 'Projects',
     href: '/projects',
@@ -148,6 +151,30 @@ export function normalizeAboutPage(data: Partial<AboutPage> | null | undefined):
     securityItems: pickArray(data.securityItems, defaults.securityItems),
     securityConfrontationalItems: pickArray(data.securityConfrontationalItems, defaults.securityConfrontationalItems),
     securityMeetingItems: pickArray(data.securityMeetingItems, defaults.securityMeetingItems),
+    seo: mergeRecords(defaults.seo, data.seo),
+  }
+}
+
+export function normalizeMutualAidPage(data: Partial<MutualAidPage> | null | undefined): MutualAidPage {
+  const defaults = DEFAULT_MUTUAL_AID_PAGE as MutualAidPage
+  if (!data) return defaults
+
+  const pickArray = <T>(value: T[] | undefined, fallback: T[]) =>
+    value?.length ? value : fallback
+
+  return {
+    ...defaults,
+    ...data,
+    solidarityParagraphs: pickArray(data.solidarityParagraphs, defaults.solidarityParagraphs),
+    whyParagraphs: pickArray(data.whyParagraphs, defaults.whyParagraphs),
+    looksLikeItems: pickArray(data.looksLikeItems, defaults.looksLikeItems),
+    organizedParagraphs: pickArray(data.organizedParagraphs, defaults.organizedParagraphs),
+    questions: pickArray(data.questions, defaults.questions),
+    books: pickArray(data.books, defaults.books),
+    looksLikeCta: data.looksLikeCta ?? defaults.looksLikeCta,
+    securityCta: data.securityCta ?? defaults.securityCta,
+    readingCta: data.readingCta ?? defaults.readingCta,
+    cta: data.cta ?? defaults.cta,
     seo: mergeRecords(defaults.seo, data.seo),
   }
 }

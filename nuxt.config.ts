@@ -27,6 +27,7 @@ export default defineNuxtConfig({
   routeRules: {
     '/': { prerender: true },
     '/about': { prerender: true },
+    '/what-is-mutual-aid': { prerender: true },
     '/projects': { prerender: true },
     '/projects/full-hearts-fridge': { prerender: true },
     '/updates': { prerender: true },
