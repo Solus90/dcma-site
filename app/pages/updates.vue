@@ -46,7 +46,7 @@ function datePart(iso: string, opt: Intl.DateTimeFormatOptions) {
     </header>
 
     <section v-if="upcomingEvents.length" class="agenda-section" aria-labelledby="agenda-heading">
-      <h2 id="agenda-heading" class="section-heading">Upcoming events</h2>
+      <h2 id="agenda-heading" class="section-heading">{{ page.upcomingHeading }}</h2>
       <ol class="agenda">
         <li v-for="event in upcomingEvents" :key="event._id" class="agenda-item">
           <div class="agenda-rail" aria-hidden="true">
@@ -73,9 +73,7 @@ function datePart(iso: string, opt: Intl.DateTimeFormatOptions) {
       class="updates-section"
       aria-labelledby="updates-heading"
     >
-      <h2 id="updates-heading" class="section-heading">
-        {{ upcomingEvents.length ? 'Latest updates' : page.listAriaLabel }}
-      </h2>
+      <h2 id="updates-heading" class="section-heading">{{ page.latestHeading }}</h2>
       <div class="updates-grid">
         <template v-if="pastUpdates.length">
           <article v-for="update in pastUpdates" :key="update._id" class="update-card">

@@ -252,7 +252,8 @@ export interface UpdatesPage {
   heroEyebrow: string
   heroHeading: string
   lede: string
-  listAriaLabel: string
+  upcomingHeading: string
+  latestHeading: string
   emptyMessage: string
   seo: { title: string; description: string }
 }
