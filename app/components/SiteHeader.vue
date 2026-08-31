@@ -41,11 +41,14 @@ function isInternal(href: string) {
       </template>
     </nav>
 
-    <a
-      class="btn join"
-      :href="settings.joinCta.href"
-      v-bind="linkTarget(settings.joinCta.href)"
-    >{{ settings.joinCta.label }}</a>
+    <div class="header-actions">
+      <ClientOnly><ThemeToggle /></ClientOnly>
+      <a
+        class="btn join"
+        :href="settings.joinCta.href"
+        v-bind="linkTarget(settings.joinCta.href)"
+      >{{ settings.joinCta.label }}</a>
+    </div>
   </header>
 </template>
 
@@ -155,7 +158,7 @@ nav > a:focus-visible,
   left: 50%;
   transform: translateX(-50%);
   min-width: 11rem;
-  background: #fff;
+  background: var(--surface-raised);
   border: 1px solid var(--hairline);
   box-shadow: 0 4px 16px color-mix(in oklab, var(--navy) 10%, transparent);
   list-style: none;
@@ -191,6 +194,13 @@ nav > a:focus-visible,
   outline-offset: -2px;
 }
 
+.header-actions {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
 .join {
   flex-shrink: 0;
   white-space: nowrap;
@@ -207,9 +217,12 @@ nav > a:focus-visible,
     order: 1;
   }
 
-  .join {
+  .header-actions {
     order: 2;
     margin-left: auto;
+  }
+
+  .join {
     padding: 0.75rem 1rem;
     font-size: 0.8rem;
   }
