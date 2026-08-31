@@ -28,5 +28,11 @@
     "happy-dom": "^20.10.6",
     "tsx": "^4.22.5",
     "vitest": "^4.1.9"
+  },
+  "pnpm": {
+    "overrides": {
+      "react": "19.2.8",
+      "react-dom": "19.2.8"
+    }
   }
 }
