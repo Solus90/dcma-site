@@ -18,5 +18,9 @@
   "devDependencies": {
     "@sanity/cli": "^8.5.0",
     "typescript": "^5.8.0"
+  },
+  "overrides": {
+    "react": "$react",
+    "react-dom": "$react-dom"
   }
 }
