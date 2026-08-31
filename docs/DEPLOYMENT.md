@@ -6,24 +6,17 @@ Operational reference for how this site ships. Supersedes the old `CUTOVER.md`.
 
 - **App host:** Vercel project `dcma-site` (team `lorienwebs-projects`). Connected via Vercel's Git integration — **every push to `main` triggers a production build.** No `vercel.json`, no build workflow in the repo; build settings live in the Vercel dashboard.
 - **Public domain:** `doorcountymutualaid.org` / `www` still points at **Wix** — the DNS cutover below has NOT happened. The Nuxt app is only reachable at the protected `dcma-site-*.vercel.app` URL (Vercel deployment protection / SSO).
-- **Content:** all pages are `prerender: true` (static HTML built from Sanity at build time). Sanity Studio is hosted at `dcma.sanity.studio` and deployed separately (`cd studio && sanity deploy` — studio is npm-managed, not part of the pnpm workspace; see `IMPROVEMENTS.md`).
+- **Content:** content routes use ISR (`routeRules: { …: { isr: 60 } }` in `nuxt.config.ts`), so a Studio publish shows up on the live site within ~a minute — no rebuild needed. It must be `isr`, not `swr` — this Nitro version's Vercel preset silently ignores a top-level `swr` route rule. Sanity Studio is hosted at `dcma.sanity.studio` and deployed separately (`cd studio && sanity deploy` — studio is npm-managed, not part of the pnpm workspace).
 
 ## Triggering a deploy
 
 ### Code changes
 Merge to `main`. Vercel builds automatically.
 
-### Content changes (the awkward one)
-Because pages are prerendered, **publishing in the Studio does nothing to the deployed site until a new build runs.** Options, by access required:
+### Content changes
+A Studio publish appears on the live site within ~60s via ISR — nothing to do. To make it **instant** instead, add on-demand revalidation (a `/api/revalidate?path=…&secret=…` route hit by a Sanity webhook — Sanity admin + a secret in Vercel env, no Vercel dashboard access): [issue #41](https://github.com/Solus90/dcma-site/issues/41).
 
-| Method | Access needed | Latency | Notes |
-|---|---|---|---|
-| **Empty commit** — `git commit --allow-empty -m "chore: trigger deploy" && git push` | repo write | one build (~1–2 min) | What the team does today (see the old `chore/trigger-deploy` branch). Manual. |
-| **Scheduled GitHub Action** pushing an empty commit on cron | repo write | up to the cron interval | Zero dashboard access. Costs commit-history noise. |
-| **Vercel Deploy Hook + Sanity webhook** | Vercel project settings + Sanity admin | seconds after publish | The "right" answer. Lead dev creates one Deploy Hook URL; a Sanity webhook POSTs to it on `_type in ["update","siteSettings","homePage","aboutPage","mutualAidPage","updatesPage","fridgePage","page"]` publish. ~15 min one-time. |
-| **ISR route rules** — `routeRules: { '/updates': { isr: 60 }, … }` in `nuxt.config.ts` | none (code PR) | up to the revalidation window | **In place now.** Content routes revalidate on a timer (60s window). Must be `isr`, not `swr` — this Nitro version's Vercel preset silently ignores a top-level `swr` route rule. Turns those routes from static into edge-cached functions (one Sanity CDN fetch per revalidation — negligible here). |
-
-**Current setup:** ISR route rules (above) cover the content routes. For *instant* updates on publish, add on-demand revalidation — a `/api/revalidate?path=…&secret=…` route hit by a Sanity webhook (Sanity admin + a secret in Vercel env, no Vercel dashboard access) — or the Deploy Hook + Sanity webhook once someone has Vercel access.
+To **force a full rebuild** (e.g. a schema/route change that ISR won't pick up): empty commit — `git commit --allow-empty -m "chore: trigger deploy" && git push`. Every push to `main` builds.
 
 ## Environment variables (Vercel production)
 
