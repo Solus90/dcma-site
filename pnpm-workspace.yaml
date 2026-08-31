@@ -1,6 +1,8 @@
-packages:
-  - studio
+# The Sanity Studio (studio/) is intentionally NOT a pnpm workspace member.
+# Its build toolchain doesn't cooperate with pnpm's symlinked node_modules,
+# so studio/ is managed with npm (see studio/package-lock.json). Root = pnpm.
+packages: []
 
-allowBuilds:
-  '@parcel/watcher': true
-  esbuild: true
+onlyBuiltDependencies:
+  - '@parcel/watcher'
+  - esbuild
