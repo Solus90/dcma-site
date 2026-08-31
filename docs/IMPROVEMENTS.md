@@ -36,7 +36,7 @@ Not built. For out-of-area visitors who find DCMA and want their own local netwo
 ## Tooling / infra
 
 ### Content publishes don't reach the live site
-Content routes now use ISR route rules (revalidate on a timer — `/updates` 60s, others 1h), so Studio publishes show up on their own. For *instant* updates, add on-demand revalidation (a `/api/revalidate` route + Sanity webhook) or a Deploy Hook. Details in `DEPLOYMENT.md`.
+Content routes now use ISR route rules (revalidate on a timer — 60s window), so Studio publishes show up on their own. For *instant* updates, add on-demand revalidation (a `/api/revalidate` route + Sanity webhook) or a Deploy Hook. Details in `DEPLOYMENT.md`.
 
 ### Studio deploy → CI
 `sanity deploy` from `studio/` is a local ordeal. In one session it hit: wrong-directory `ProjectRootNotFoundError`; `uploadSchema is not a function` (CLI newer than the local `sanity` package — fixed by bumping `sanity`/`@sanity/cli`); `useMemoCache` React #527 from a `react` / `react-dom` version split (fixed by decoupling `studio/` from the pnpm workspace and pinning react via npm `overrides` — see the `build(studio): decouple…` commit); build time swinging 1.5s–11min on cold caches.
