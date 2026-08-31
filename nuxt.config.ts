@@ -32,7 +32,7 @@ export default defineNuxtConfig({
     '/what-is-mutual-aid': { swr: 3600 },
     '/projects': { swr: 3600 },
     '/projects/full-hearts-fridge': { swr: 3600 },
-    '/updates': { swr: 600 }, // events change more often
+    '/updates': { swr: 60 }, // events get posted around meetings — keep this snappy
     '/full-hearts-fridge': { redirect: { to: '/projects/full-hearts-fridge', statusCode: 301 } },
     '/about-us': { redirect: { to: '/projects/full-hearts-fridge', statusCode: 301 } },
   },
