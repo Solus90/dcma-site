@@ -23,14 +23,16 @@ export default defineNuxtConfig({
     sanityWriteToken: '',
   },
   // Vercel is auto-detected by Nitro at deploy time — no preset needed locally.
-  // Pages stay static via prerender rules; /api/contact becomes a Vercel Function.
+  // Content pages use stale-while-revalidate (ISR on Vercel) so CMS edits show
+  // up on their own without a rebuild — see docs/DEPLOYMENT.md. /api/contact is
+  // a Vercel Function.
   routeRules: {
-    '/': { prerender: true },
-    '/about': { prerender: true },
-    '/what-is-mutual-aid': { prerender: true },
-    '/projects': { prerender: true },
-    '/projects/full-hearts-fridge': { prerender: true },
-    '/updates': { prerender: true },
+    '/': { swr: 3600 },
+    '/about': { swr: 3600 },
+    '/what-is-mutual-aid': { swr: 3600 },
+    '/projects': { swr: 3600 },
+    '/projects/full-hearts-fridge': { swr: 3600 },
+    '/updates': { swr: 600 }, // events change more often
     '/full-hearts-fridge': { redirect: { to: '/projects/full-hearts-fridge', statusCode: 301 } },
     '/about-us': { redirect: { to: '/projects/full-hearts-fridge', statusCode: 301 } },
   },
@@ -40,9 +42,12 @@ export default defineNuxtConfig({
       const routes = await cmsPageRoutes()
       if (!routes.length) return
 
-      nitroConfig.prerender = nitroConfig.prerender ?? {}
-      const existing = nitroConfig.prerender.routes ?? []
-      nitroConfig.prerender.routes = [...existing, ...routes]
+      // CMS "page" documents (contact, get-involved, financials, …) — same
+      // SWR treatment as the routes above.
+      nitroConfig.routeRules = nitroConfig.routeRules ?? {}
+      for (const route of routes) {
+        nitroConfig.routeRules[route] = { swr: 3600 }
+      }
     },
   },
   ...(isProd && {

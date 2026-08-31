@@ -7,9 +7,9 @@ useSeoMeta({
   description: () => page.value.seo.description,
 })
 
-// This page is prerendered, so "now" is frozen at build time on the server.
-// Re-evaluate on the client after mount so the upcoming/past split stays correct
-// as days pass between deploys.
+// This page is served from an SWR cache, so "now" on the server can be up to
+// the cache window stale. Re-evaluate on the client after mount so the
+// upcoming/past split is always correct for the visitor's actual date.
 const now = ref(new Date())
 onMounted(() => { now.value = new Date() })
 
