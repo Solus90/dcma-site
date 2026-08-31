@@ -104,7 +104,7 @@ export const MUTUAL_AID_QUERY = /* groq */ `*[_id == "mutualAidPage"][0]{
   seo }`
 
 export const UPDATES_PAGE_QUERY = /* groq */ `*[_id == "updatesPage"][0]{
-  heroEyebrow, heroHeading, lede, listAriaLabel, emptyMessage, seo }`
+  heroEyebrow, heroHeading, lede, upcomingHeading, latestHeading, emptyMessage, seo }`
 
 export const UPDATES_QUERY = /* groq */ `*[_type == "update"] | order(publishedAt desc) {
   _id, title, "slug": slug.current,

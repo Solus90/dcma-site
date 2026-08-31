@@ -328,7 +328,8 @@ async function run() {
     heroEyebrow: DEFAULT_UPDATES_PAGE.heroEyebrow,
     heroHeading: DEFAULT_UPDATES_PAGE.heroHeading,
     lede: DEFAULT_UPDATES_PAGE.lede,
-    listAriaLabel: DEFAULT_UPDATES_PAGE.listAriaLabel,
+    upcomingHeading: DEFAULT_UPDATES_PAGE.upcomingHeading,
+    latestHeading: DEFAULT_UPDATES_PAGE.latestHeading,
     emptyMessage: DEFAULT_UPDATES_PAGE.emptyMessage,
     seo: { ...DEFAULT_UPDATES_PAGE.seo },
   })
