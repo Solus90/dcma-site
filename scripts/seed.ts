@@ -239,13 +239,6 @@ async function run() {
       'Not sure? Email us before dropping off.',
     ],
     donationCta: DONATE,
-    valuesHeading: 'Why it exists',
-    values: [
-      { _key: 'v1', _type: 'card', title: 'UNCONDITIONAL SUPPORT', body: 'Food when you need it — no proof of hardship, no strings attached.', image: imageField(photos.sharedTomatoes) },
-      { _key: 'v2', _type: 'card', title: 'COMMUNITY AGREEMENT', body: 'We decide together how the fridge runs and who it serves.', image: imageField(photos.handsJoined) },
-      { _key: 'v3', _type: 'card', title: 'COLLECTIVE SOLIDARITY', body: 'Volunteers pick up, sort, and deliver so nothing usable goes to waste.', image: imageField(photos.foodPacking) },
-      { _key: 'v4', _type: 'card', title: 'RESOURCE SHARING', body: 'Partner businesses share surplus; neighbors share the work of keeping it moving.', image: imageField(photos.childGarden) },
-    ],
     closingNote: 'The fridge will run because neighbors show up — building it now, then keeping it stocked, dropping off extras, and spreading the word.',
     closingHeading: 'Show up for neighbors',
     closingCta: VOLUNTEER,

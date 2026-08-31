@@ -17,8 +17,6 @@ export default defineType({
     defineField({ name: 'donationHeading', type: 'string' }),
     defineField({ name: 'donationGuidelines', type: 'array', of: [{ type: 'string' }] }),
     defineField({ name: 'donationCta', type: 'cta' }),
-    defineField({ name: 'valuesHeading', type: 'string' }),
-    defineField({ name: 'values', type: 'array', of: [{ type: 'card' }] }),
     defineField({ name: 'closingHeading', type: 'string' }),
     defineField({ name: 'closingNote', type: 'text', rows: 2 }),
     defineField({ name: 'closingCta', type: 'cta' }),

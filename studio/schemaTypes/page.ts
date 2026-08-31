@@ -32,7 +32,6 @@ export default defineType({
         { type: 'splitSection' },
         { type: 'proseSection' },
         { type: 'cardGridSection' },
-        { type: 'valuesSection' },
         { type: 'ctaSection' },
         { type: 'contactSectionBlock' },
         { type: 'statsSection' },

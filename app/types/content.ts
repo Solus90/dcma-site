@@ -96,8 +96,6 @@ export interface FridgePage {
   donationHeading: string
   donationGuidelines: string[]
   donationCta: Cta
-  valuesHeading: string
-  values: Card[]
   closingHeading: string
   closingNote: string
   closingCta: Cta
@@ -146,13 +144,6 @@ export interface CardGridSection {
   cards: Card[]
 }
 
-export interface ValuesSection {
-  _key: string
-  _type: 'valuesSection'
-  heading?: string
-  values: Card[]
-}
-
 export interface CtaSection {
   _key: string
   _type: 'ctaSection'
@@ -180,7 +171,6 @@ export type PageSection =
   | SplitSection
   | ProseSection
   | CardGridSection
-  | ValuesSection
   | CtaSection
   | ContactSectionBlock
   | StatsSection

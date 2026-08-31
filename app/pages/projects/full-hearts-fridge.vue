@@ -78,8 +78,6 @@ const errorMailto = computed(() => {
           :donation-cta="page.donationCta"
         />
 
-        <FridgeValueList :heading="page.valuesHeading" :values="page.values" />
-
         <FridgeClosingCta
           :heading="page.closingHeading"
           :note="page.closingNote"

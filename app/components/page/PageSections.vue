@@ -50,12 +50,6 @@ defineProps<{
       :activities="section.cards"
     />
 
-    <FridgeValueList
-      v-else-if="section._type === 'valuesSection'"
-      :heading="section.heading || ''"
-      :values="section.values"
-    />
-
     <FridgeClosingCta
       v-else-if="section._type === 'ctaSection'"
       :heading="section.heading || ''"
