@@ -16,9 +16,14 @@ Public website for [Door County Mutual Aid](https://www.doorcountymutualaid.org)
 
 ### 1. Install dependencies
 
+The site app is a **pnpm** workspace. The Sanity Studio in `studio/` is managed
+**with npm, separately** — its build toolchain doesn't cooperate with pnpm's
+symlinked `node_modules`, so it has its own `package-lock.json` and is not a
+workspace member. Install both:
+
 ```bash
-npm install
-cd studio && npm install && cd ..
+pnpm install
+npm --prefix studio install
 ```
 
 ### 2. Configure environment
@@ -42,7 +47,7 @@ Create a token at [sanity.io/manage](https://www.sanity.io/manage) → your proj
 **Site** (http://localhost:3000):
 
 ```bash
-npm run dev
+pnpm run dev
 ```
 
 **Sanity Studio** (http://localhost:3333):
@@ -55,10 +60,10 @@ npm run dev
 ### 4. Other commands
 
 ```bash
-npm run build      # production build
-npm run preview    # preview production build
-npm run test       # vitest
-npm run seed       # reset/populate Sanity content (see below)
+pnpm run build      # production build
+pnpm run preview    # preview production build
+pnpm run test       # vitest
+pnpm run seed       # reset/populate Sanity content (see below)
 ```
 
 ---
