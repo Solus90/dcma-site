@@ -23,16 +23,17 @@ export default defineNuxtConfig({
     sanityWriteToken: '',
   },
   // Vercel is auto-detected by Nitro at deploy time — no preset needed locally.
-  // Content pages use stale-while-revalidate (ISR on Vercel) so CMS edits show
-  // up on their own without a rebuild — see docs/DEPLOYMENT.md. /api/contact is
-  // a Vercel Function.
+  // Content pages use ISR so CMS edits show up on their own without a rebuild —
+  // see docs/DEPLOYMENT.md. (Note: it must be `isr`, not `swr` — this Nitro
+  // version's Vercel preset ignores a top-level `swr` route rule.) /api/contact
+  // is a Vercel Function.
   routeRules: {
-    '/': { swr: 3600 },
-    '/about': { swr: 3600 },
-    '/what-is-mutual-aid': { swr: 3600 },
-    '/projects': { swr: 3600 },
-    '/projects/full-hearts-fridge': { swr: 3600 },
-    '/updates': { swr: 60 }, // events get posted around meetings — keep this snappy
+    '/': { isr: 3600 },
+    '/about': { isr: 3600 },
+    '/what-is-mutual-aid': { isr: 3600 },
+    '/projects': { isr: 3600 },
+    '/projects/full-hearts-fridge': { isr: 3600 },
+    '/updates': { isr: 60 }, // events get posted around meetings — keep this snappy
     '/full-hearts-fridge': { redirect: { to: '/projects/full-hearts-fridge', statusCode: 301 } },
     '/about-us': { redirect: { to: '/projects/full-hearts-fridge', statusCode: 301 } },
   },
@@ -43,10 +44,10 @@ export default defineNuxtConfig({
       if (!routes.length) return
 
       // CMS "page" documents (contact, get-involved, financials, …) — same
-      // SWR treatment as the routes above.
+      // ISR treatment as the routes above.
       nitroConfig.routeRules = nitroConfig.routeRules ?? {}
       for (const route of routes) {
-        nitroConfig.routeRules[route] = { swr: 3600 }
+        nitroConfig.routeRules[route] = { isr: 3600 }
       }
     },
   },

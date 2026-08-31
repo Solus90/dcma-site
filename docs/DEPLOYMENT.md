@@ -21,9 +21,9 @@ Because pages are prerendered, **publishing in the Studio does nothing to the de
 | **Empty commit** — `git commit --allow-empty -m "chore: trigger deploy" && git push` | repo write | one build (~1–2 min) | What the team does today (see the old `chore/trigger-deploy` branch). Manual. |
 | **Scheduled GitHub Action** pushing an empty commit on cron | repo write | up to the cron interval | Zero dashboard access. Costs commit-history noise. |
 | **Vercel Deploy Hook + Sanity webhook** | Vercel project settings + Sanity admin | seconds after publish | The "right" answer. Lead dev creates one Deploy Hook URL; a Sanity webhook POSTs to it on `_type in ["update","siteSettings","homePage","aboutPage","mutualAidPage","updatesPage","fridgePage","page"]` publish. ~15 min one-time. |
-| **SWR route rules** — `routeRules: { '/updates': { swr: 900 }, … }` in `nuxt.config.ts` | none (code PR) | up to the SWR window | Turns those routes from pure-static into edge-cached-dynamic (a Vercel function + Sanity CDN fetch per revalidation — negligible at this traffic). No deploy needed at all for content to refresh. |
+| **ISR route rules** — `routeRules: { '/updates': { isr: 60 }, … }` in `nuxt.config.ts` | none (code PR) | up to the revalidation window | **In place now.** Content routes revalidate on a timer (`/updates` 60s, others 1h). Must be `isr`, not `swr` — this Nitro version's Vercel preset silently ignores a top-level `swr` route rule. Turns those routes from static into edge-cached functions (one Sanity CDN fetch per revalidation — negligible here). |
 
-**Recommendation:** given current access limits, ship the **SWR route rules** for the content-heavy routes (`/updates`, `/what-is-mutual-aid`, `/`, `/about`, `/projects`) so edits appear within ~15 min without any deploy. Add the **Deploy Hook + Sanity webhook** later for instant updates once someone has Vercel access.
+**Current setup:** ISR route rules (above) cover the content routes. For *instant* updates on publish, add on-demand revalidation — a `/api/revalidate?path=…&secret=…` route hit by a Sanity webhook (Sanity admin + a secret in Vercel env, no Vercel dashboard access) — or the Deploy Hook + Sanity webhook once someone has Vercel access.
 
 ## Environment variables (Vercel production)
 

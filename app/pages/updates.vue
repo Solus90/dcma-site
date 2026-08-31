@@ -7,8 +7,8 @@ useSeoMeta({
   description: () => page.value.seo.description,
 })
 
-// This page is served from an SWR cache, so "now" on the server can be up to
-// the cache window stale. Re-evaluate on the client after mount so the
+// This page is served from an ISR cache, so "now" on the server can be up to
+// the revalidation window stale. Re-evaluate on the client after mount so the
 // upcoming/past split is always correct for the visitor's actual date.
 const now = ref(new Date())
 onMounted(() => { now.value = new Date() })
