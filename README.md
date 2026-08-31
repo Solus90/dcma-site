@@ -1,6 +1,6 @@
 # Door County Mutual Aid — Site
 
-Public website for [Door County Mutual Aid](https://www.doorcountymutualaid.org). The front end is a prerendered [Nuxt 4](https://nuxt.com) app; all editable content lives in [Sanity](https://www.sanity.io).
+Public website for [Door County Mutual Aid](https://www.doorcountymutualaid.org). The front end is a [Nuxt 4](https://nuxt.com) app on Vercel; all editable content lives in [Sanity](https://www.sanity.io). Content routes use ISR, so a Studio publish shows up on the live site within ~a minute — no rebuild. Deploy details in [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md).
 
 | Piece | Location |
 | --- | --- |
@@ -72,9 +72,11 @@ pnpm run seed       # reset/populate Sanity content (see below)
 
 ### How content reaches the live site
 
-- **Pages and copy** are fetched from Sanity at **build time** and prerendered to static HTML.
+- **Pages and copy** are fetched from Sanity and served with ISR (`routeRules` in `nuxt.config.ts`, `isr: 60`). Publish in Studio → the change is live within ~a minute, no deploy.
 - **Contact form submissions** are written to Sanity at **runtime** via `/api/contact` (requires a write token on the server).
-- After you publish changes in Studio, the public site does **not** update automatically — trigger a new deploy (or local rebuild) so Nuxt picks up the latest content.
+- A **rebuild is only needed** for: schema changes (redeploy the Studio), new CMS `page` slugs to reach the sitemap (they render immediately regardless), and code changes (any push to `main` builds).
+
+See [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md) for the full picture, including the not-yet-done DNS cutover from Wix.
 
 ### Accessing Studio
 
@@ -108,20 +110,21 @@ Studio sidebar structure:
 | --- | --- |
 | **Site Settings** | Org name, logo, email, Facebook, address, nav links, footer, error-page copy |
 | **Home Page** | Homepage hero, mission, how-it-works cards, stats, activities, contact form labels |
-| **Full Hearts Fridge** | Fridge program page — location, hours, donation guidelines, values, CTAs |
+| **Full Hearts Fridge** | Fridge program page — location, hours, donation guidelines, CTAs |
 | **About Page** | Community agreement / norms document |
+| **What Is Mutual Aid Page** | The `/what-is-mutual-aid` explainer — sections, FAQ, the reading list |
+| **Updates Page** | Headings and copy for `/updates` (the entries live under **Updates**) |
+| **Updates** | Individual posts — events, announcements, news (newest first) |
 | **Pages** | Additional CMS pages at custom URLs (e.g. `/volunteer`) |
 | **Contact messages** | Inbound contact form submissions (read-only for editors) |
 
-Singleton documents (Site Settings, Home, Fridge, About) cannot be deleted or duplicated — only edited.
+Singleton documents (Site Settings, Home, Fridge, About, What Is Mutual Aid, Updates Page) cannot be deleted or duplicated — only edited.
 
 ### Edit site-wide settings
 
 1. Open **Site Settings** in Studio.
 2. Update fields (org name, logo, email, nav links, footer, etc.).
-3. Click **Publish**.
-
-Changes appear on every page (header, footer, nav). Redeploy the site to go live.
+3. Click **Publish**. Changes appear on every page (header, footer, nav) within ~a minute.
 
 ### Edit the homepage
 
@@ -129,27 +132,34 @@ Changes appear on every page (header, footer, nav). Redeploy the site to go live
 2. Sections map to the live page top-to-bottom: hero → mission → how it works → stats → activities → contact form.
 3. **Cards** (how-it-works, activities) support title, body, optional image, and optional CTA (label + link/mailto).
 4. **Contact form** fields under `contactForm` control form labels and messages, not the submissions themselves.
-5. Publish, then redeploy the site.
+5. Publish.
 
 ### Edit the Full Hearts Fridge page
 
 1. Open **Full Hearts Fridge**.
-2. Key fields: intro, location/hours, map URL, donation guidelines, value cards, closing CTA.
-3. Publish, then redeploy.
+2. Key fields: intro, location/hours, map URL, donation guidelines, closing CTA.
+3. Publish.
 
 ### Edit the About page
 
 1. Open **About Page**.
 2. Long-form content: hero, table of contents, principles, norms, security guidance.
-3. Publish, then redeploy.
+3. Publish.
+
+### Post an update or event
+
+1. Open **Updates** → **＋** (create).
+2. Set the title, a date, and pick a **Category** — `event`, `announcement`, or `news`.
+3. Write the summary. For events, the time and location go in the summary text (there are no separate fields yet).
+4. Publish. Events dated today or later show in the "Upcoming events" list on `/updates`; everything else lands in the card grid below.
 
 ### Create a new CMS page
 
 1. In Studio, go to **Pages** → **Create new Page**.
-2. Set **Title** and **Slug** (URL path). Reserved slugs: `about`, `full-hearts-fridge`, `about-us`, `api`.
+2. Set **Title** and **Slug** (URL path). Reserved slugs: `about`, `full-hearts-fridge`, `about-us`, `what-is-mutual-aid`, `updates`, `api`.
 3. Add one or more **Page sections** (see section types below).
 4. Optionally set **SEO** title and description.
-5. Publish, then redeploy — new routes are discovered at build time and added to the sitemap.
+5. Publish. The page is reachable immediately; a rebuild adds it to the sitemap.
 
 **Available section types**
 
@@ -159,7 +169,6 @@ Changes appear on every page (header, footer, nav). Redeploy the site to go live
 | Text + image | Eyebrow, heading, body, image (left or right) |
 | Text section | Prose block with optional eyebrow/heading |
 | Card grid | Simple cards or cards with photos |
-| Alternating blocks | Value-style alternating image/text cards |
 | Call to action | Heading, note, one or two CTAs |
 | Contact form | Embeds the site contact form (uses Home Page form copy) |
 | Stats marquee | Scrolling stat lines |
@@ -169,7 +178,7 @@ Changes appear on every page (header, footer, nav). Redeploy the site to go live
 1. Click the image field in any document.
 2. Upload a new file or select from the media library.
 3. Fill in **Alt text** when the field is available (important for accessibility).
-4. Publish the document, then redeploy.
+4. Publish the document.
 
 ### Review contact form messages
 
@@ -184,8 +193,8 @@ Submissions are created automatically by the live site; do not create these docu
 Sanity uses draft/publish:
 
 1. Edit fields in a document.
-2. Click **Publish** (green) to make changes live in the API.
-3. Trigger a site redeploy so visitors see the update.
+2. Click **Publish** (green).
+3. The live site picks it up within ~a minute (ISR). No deploy.
 
 Unpublished drafts are not served to the public site.
 
@@ -195,44 +204,28 @@ Unpublished drafts are not served to the public site.
 
 ### Seed or reset content
 
-Populates all singleton documents and uploads brand/stock images. **Overwrites** existing `siteSettings`, `homePage`, `fridgePage`, and `aboutPage` documents.
+Populates all singleton documents and uploads brand/stock images. **Overwrites** existing `siteSettings`, `homePage`, `fridgePage`, `aboutPage`, `mutualAidPage`, and `updatesPage` documents.
 
 ```bash
 # Requires SANITY_TOKEN in .env
-npm run seed
+pnpm run seed
 ```
 
 Source assets: `assets/source/` (logo, handprint) and `assets/stock/` (photography).
 
-### Deploy schema changes
+### Deploy the Studio (after schema changes)
 
-After editing files in `studio/schemaTypes/`:
-
-```bash
-cd studio
-npm run schema:deploy
-```
-
-Then redeploy Studio so editors see new fields:
-
-```bash
-npm run deploy
-```
-
-For local verification before deploy:
-
-```bash
-npm run dev
-```
-
-### Deploy Studio
+`studio/` is npm-managed and **not** part of the pnpm workspace, so run npm commands from inside it. After editing `studio/schemaTypes/`:
 
 ```bash
 cd studio
-npm run deploy
+npm run dev        # verify locally first (localhost:3333)
+npm run deploy     # build + upload the hosted Studio at dcma.sanity.studio
 ```
 
-First run requires `sanity login`. Subsequent deploys update the hosted Studio.
+`npm run deploy` both builds the Studio and uploads the schema manifest. First run needs `sanity login` (browser). If it hangs on "Verifying local content" or errors on `uploadSchema`, bump `sanity` / `@sanity/cli` in `studio/package.json` and reinstall — see [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md).
+
+Automating this in CI is [issue #42](https://github.com/Solus90/dcma-site/issues/42).
 
 ### Add a new document type or field
 
@@ -240,9 +233,10 @@ First run requires `sanity login`. Subsequent deploys update the hosted Studio.
 2. Export it from `studio/schemaTypes/index.ts`.
 3. If it is a singleton, register it in `studio/sanity.config.ts` (`singletons` array + structure sidebar).
 4. Add GROQ queries and TypeScript types in `app/composables/useSiteContent.ts` and `app/types/content.ts`.
-5. Wire up a Nuxt page or component to render it.
-6. Run `npm run schema:deploy` and `npm run deploy` in `studio/`.
-7. Optionally extend `scripts/seed.ts` with defaults.
+5. For a singleton with default copy, add a `*PageDefaults.ts` in `app/utils/` and a `normalize*` in `contentDefaults.ts`, then use `withDefaults()` in the composable so the page renders before the doc exists (see `useAboutPage` / `useMutualAidPage`).
+6. Wire up a Nuxt page or component to render it.
+7. `cd studio && npm run deploy` to push the schema.
+8. Optionally extend `scripts/seed.ts` with defaults.
 
 ### Configure the contact form API
 
@@ -282,12 +276,13 @@ assets/stock/         Stock photography for seed script
 
 | Problem | Likely fix |
 | --- | --- |
-| Site shows old content | Redeploy/rebuild after publishing in Studio |
+| Published change not on the live site | Wait ~a minute (ISR window) and hard-refresh. Still stale after a few minutes → check the deploy is current; see `docs/DEPLOYMENT.md` |
 | `Missing SANITY_TOKEN` when seeding | Add token to `.env` |
 | Contact form returns 500 | Check write token and `NUXT_SANITY_PROJECT_ID` on the server |
-| New CMS page 404 after publish | Redeploy — slugs are collected at build time in `nuxt.config.ts` |
-| Schema field missing in Studio | Run `npm run schema:deploy` in `studio/`, then redeploy Studio |
-| Reserved slug error on new page | Choose a slug other than `about`, `full-hearts-fridge`, `about-us`, or `api` |
+| New CMS page missing from the sitemap | Rebuild — slugs are collected at build time in `nuxt.config.ts`. The page itself works without a rebuild. |
+| Schema field missing in Studio | `cd studio && npm run deploy` (schema changes need a Studio redeploy) |
+| Reserved slug error on new page | Choose a slug other than `about`, `full-hearts-fridge`, `about-us`, `what-is-mutual-aid`, `updates`, or `api` |
+| `pnpm install` didn't set up the Studio | It won't — run `npm --prefix studio install` separately |
 
 ---
 
