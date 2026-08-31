@@ -5,6 +5,26 @@ useSeoMeta({
   title: () => page.value?.seo.title,
   description: () => page.value?.seo.description,
 })
+
+// The sections are collapsed <details>. A deep link like /about#security
+// scrolls to the section but leaves it shut — open it (and re-scroll, since
+// expanding shifts the layout).
+function openHashSection() {
+  const id = window.location.hash.slice(1)
+  if (!id) return
+  const el = document.getElementById(id)
+  if (el instanceof HTMLDetailsElement && !el.open) {
+    el.open = true
+    el.scrollIntoView({ block: 'start' })
+  }
+}
+
+onMounted(() => {
+  openHashSection()
+  window.addEventListener('hashchange', openHashSection)
+})
+
+onUnmounted(() => window.removeEventListener('hashchange', openHashSection))
 </script>
 
 <template>
