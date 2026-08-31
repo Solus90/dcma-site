@@ -35,7 +35,7 @@ describe('normalizeFridgePage', () => {
     heading: 'Fridge', intro: 'Intro', cta: makeCta(),
     findHeading: 'Find', locationAddress: '611 Jefferson St', locationHours: '24/7',
     pickupNote: 'No ID needed', mapButtonLabel: '', donationHeading: 'Donate',
-    donationGuidelines: [], donationCta: makeCta(), valuesHeading: 'Values', values: [],
+    donationGuidelines: [], donationCta: makeCta(),
     closingHeading: '', closingNote: 'Note', closingCta: makeCta(),
     findFridgeCtaLabel: '', findFridgeMobileCtaLabel: '', quickActionsAriaLabel: '',
     seo: { title: '', description: '' },

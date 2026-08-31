@@ -88,22 +88,6 @@ export const cardGridSection = defineType({
   },
 })
 
-export const valuesSection = defineType({
-  name: 'valuesSection',
-  title: 'Alternating blocks',
-  type: 'object',
-  fields: [
-    defineField({ name: 'heading', type: 'string' }),
-    defineField({ name: 'values', type: 'array', of: [{ type: 'card' }], validation: (r) => r.min(1) }),
-  ],
-  preview: {
-    select: { title: 'heading' },
-    prepare({ title }) {
-      return { title: title || 'Alternating blocks' }
-    },
-  },
-})
-
 export const ctaSection = defineType({
   name: 'ctaSection',
   title: 'Call to action',
@@ -157,7 +141,6 @@ export const pageSectionTypes = [
   splitSection,
   proseSection,
   cardGridSection,
-  valuesSection,
   ctaSection,
   contactSectionBlock,
   statsSection,

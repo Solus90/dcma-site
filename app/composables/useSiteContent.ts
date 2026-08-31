@@ -33,10 +33,6 @@ const sectionFields = /* groq */ `
     heading, intro, style,
     cards[]{${cardFields}}
   },
-  _type == "valuesSection" => {
-    heading,
-    values[]{${cardFields}}
-  },
   _type == "ctaSection" => {
     heading, note, cta, secondaryCta
   },
@@ -69,8 +65,6 @@ export const FRIDGE_QUERY = /* groq */ `*[_id == "fridgePage"][0]{
   cta,
   findHeading, locationAddress, locationHours, pickupNote, mapUrl, mapButtonLabel,
   donationHeading, donationGuidelines, donationCta,
-  valuesHeading,
-  values[]{${cardFields}},
   closingHeading, closingNote, closingCta,
   findFridgeCtaLabel, findFridgeMobileCtaLabel, quickActionsAriaLabel,
   seo }`
