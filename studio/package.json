@@ -10,13 +10,13 @@
     "schema:deploy": "sanity schema deploy"
   },
   "dependencies": {
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0",
-    "sanity": "^4",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "sanity": "^6.11.0",
     "styled-components": "^6.1.18"
   },
   "devDependencies": {
-    "@sanity/cli": "^4",
+    "@sanity/cli": "^8.5.0",
     "typescript": "^5.8.0"
   }
 }
