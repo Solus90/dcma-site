@@ -11,6 +11,10 @@ function isInternal(href: string) {
 }
 
 const difficultyClass = (level: string) => `pill pill-${level.toLowerCase()}`
+
+// Italicize book titles from the reading list where they're named in the prose.
+const bookTitles = computed(() => (page.value?.books ?? []).map(b => b.title))
+const withCitedBooks = (text: string) => citeBookTitles(text, bookTitles.value)
 </script>
 
 <template>
@@ -30,7 +34,8 @@ const difficultyClass = (level: string) => `pill pill-${level.toLowerCase()}`
 
       <section id="why" aria-labelledby="why-h" class="prose-section">
         <h2 id="why-h">{{ page.whyHeading }}</h2>
-        <p v-for="(para, i) in page.whyParagraphs" :key="i">{{ para }}</p>
+        <!-- eslint-disable-next-line vue/no-v-html -- citeBookTitles escapes the text -->
+        <p v-for="(para, i) in page.whyParagraphs" :key="i" v-html="withCitedBooks(para)" />
       </section>
 
       <section id="looks-like" aria-labelledby="looks-like-h" class="prose-section">
@@ -198,6 +203,11 @@ const difficultyClass = (level: string) => `pill pill-${level.toLowerCase()}`
 
 .prose-section p:last-of-type {
   margin-bottom: 0;
+}
+
+/* book titles wrapped by citeBookTitles() (rendered via v-html) */
+.prose-section :deep(cite) {
+  font-style: italic;
 }
 
 .note {
