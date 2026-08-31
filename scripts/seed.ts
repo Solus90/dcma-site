@@ -208,7 +208,7 @@ async function run() {
     statsAriaLabel: 'Community impact',
     activitiesHeading: 'CONNECTED PROJECTS',
     activities: [
-      { _key: 'a1', _type: 'card', title: 'Full Hearts Fridge', body: 'Dedicated to reducing food waste and increasing access to nourishing meals. Partnering with local restaurants, grocery stores, and farms to redirect food to those in need.', cta: { label: 'LEARN MORE', href: '/projects/full-hearts-fridge' }, image: imageField(photos.strawberryUnload) },
+      { _key: 'a1', _type: 'card', title: 'Full Hearts Fridge', body: 'A community fridge we’re building in Sturgeon Bay to cut food waste and get nourishing meals to neighbors. Volunteers needed for the build-out.', cta: { label: 'LEARN MORE', href: '/projects/full-hearts-fridge' }, image: imageField(photos.strawberryUnload) },
       { _key: 'a2', _type: 'card', title: 'Solidarity Meetings', body: 'Monthly gatherings to share resources, make decisions together, and plan collective action. Location rotates — check the updates page for the next meeting.', cta: { label: 'SEE UPDATES', href: '/updates' }, image: imageField(photos.communityMeal) },
     ],
     contactHeading: 'Get in Touch',
@@ -356,7 +356,7 @@ async function run() {
         heading: 'ACTIVE PROJECTS',
         style: 'photos',
         cards: [
-          { _key: 'c1', _type: 'card', title: 'Full Hearts Fridge', body: 'Dedicated to reducing food waste and increasing access to nourishing meals. Partnering with local restaurants, grocery stores, and farms to redirect food that would otherwise go unused to those in need.', cta: { label: 'LEARN MORE', href: '/projects/full-hearts-fridge' }, image: imageField(photos.strawberryUnload) },
+          { _key: 'c1', _type: 'card', title: 'Full Hearts Fridge', body: 'We’re building a community fridge in Sturgeon Bay to cut food waste and get nourishing meals to neighbors — partnering with local restaurants, grocery stores, and farms. Volunteers needed for the build-out.', cta: { label: 'LEARN MORE', href: '/projects/full-hearts-fridge' }, image: imageField(photos.strawberryUnload) },
           { _key: 'c2', _type: 'card', title: 'Have an idea?', body: 'Bring it to a solidarity meeting. If it aligns with our principles and there are members who want to build it, we\'ll help get it off the ground.', cta: { label: 'GET IN TOUCH', href: '/contact' }, image: imageField(photos.handsJoined) },
         ],
       },
