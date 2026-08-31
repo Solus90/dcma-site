@@ -21,6 +21,18 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     sanityWriteToken: '',
+    // On-demand ISR revalidation (see server/api/revalidate.post.ts, docs/DEPLOYMENT.md).
+    revalidateSecret: '', // NUXT_REVALIDATE_SECRET — shared secret the Sanity webhook sends
+    revalidateToken: '', // NUXT_REVALIDATE_TOKEN — Vercel prerender bypass token (also the build config below)
+  },
+  nitro: {
+    vercel: {
+      config: {
+        // Lets /api/revalidate bust a specific route's ISR cache on publish
+        // instead of waiting out the 60s window. Undefined off Vercel — harmless.
+        bypassToken: process.env.NUXT_REVALIDATE_TOKEN || undefined,
+      },
+    },
   },
   // Vercel is auto-detected by Nitro at deploy time — no preset needed locally.
   // Content pages use ISR with a 60s window so CMS edits show up on their own,

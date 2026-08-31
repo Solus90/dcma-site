@@ -14,14 +14,33 @@ Operational reference for how this site ships. Supersedes the old `CUTOVER.md`.
 Merge to `main`. Vercel builds automatically.
 
 ### Content changes
-A Studio publish appears on the live site within ~60s via ISR — nothing to do. To make it **instant** instead, add on-demand revalidation (a `/api/revalidate?path=…&secret=…` route hit by a Sanity webhook — Sanity admin + a secret in Vercel env, no Vercel dashboard access): [issue #41](https://github.com/Solus90/dcma-site/issues/41).
+A Studio publish appears on the live site within ~60s via ISR (`routeRules` with `isr: 60`). With the revalidation webhook below configured, it's near-instant instead.
 
 To **force a full rebuild** (e.g. a schema/route change that ISR won't pick up): empty commit — `git commit --allow-empty -m "chore: trigger deploy" && git push`. Every push to `main` builds.
+
+### On-demand revalidation webhook
+
+`server/api/revalidate.post.ts` busts a route's ISR cache the moment a document is published. It needs two env vars **and** a Sanity webhook.
+
+1. Pick a long random string for each: `NUXT_REVALIDATE_TOKEN` (Vercel's prerender bypass token) and `NUXT_REVALIDATE_SECRET` (auth for the webhook).
+2. In **Vercel → project → Settings → Environment Variables**, add both for Production. `NUXT_REVALIDATE_TOKEN` must be present at **build** time (it's baked into the ISR config), so redeploy after adding it.
+3. In **sanity.io/manage → API → Webhooks**, add a webhook:
+   - **URL**: `https://www.doorcountymutualaid.org/api/revalidate` (or the current `*.vercel.app` URL until the DNS cutover)
+   - **Dataset**: `production`
+   - **Trigger on**: Create, Update, Delete
+   - **Filter**: `_type in ["update","updatesPage","mutualAidPage","homePage","aboutPage","fridgePage","siteSettings","page"]`
+   - **Projection**: `{ _type, "slug": slug.current }`
+   - **HTTP method**: `POST`
+   - **HTTP Headers**: `Authorization: Bearer <NUXT_REVALIDATE_SECRET value>`
+4. Test: publish a change, watch the webhook attempt log in Sanity for a `200 {"revalidated":["/…"]}`.
+
+If the env vars aren't set the route returns `501` and ISR's 60s window still covers content freshness — nothing breaks.
 
 ## Environment variables (Vercel production)
 
 - `NUXT_SANITY_PROJECT_ID` — Sanity project id (`1qb86j9s`)
 - `NUXT_RESEND_API_KEY` — for the contact form (`/api/contact` → Resend)
+- `NUXT_REVALIDATE_TOKEN` / `NUXT_REVALIDATE_SECRET` — on-demand revalidation (optional; see above). Token needed at build time.
 - (build also reads `SANITY_TOKEN` / `NUXT_SANITY_WRITE_TOKEN` locally for the seed scripts; not needed at runtime)
 
 ## DNS cutover runbook — doorcountymutualaid.org (Wix → Vercel)
