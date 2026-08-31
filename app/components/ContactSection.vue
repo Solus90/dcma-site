@@ -219,7 +219,7 @@ textarea {
   padding: 0.9rem 1rem;
   border: 2px solid var(--navy);
   font: inherit;
-  background: #fff;
+  background: var(--surface-raised);
   color: var(--navy);
 }
 

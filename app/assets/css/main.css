@@ -1,10 +1,68 @@
 :root {
+  /* brand palette — light */
   --cream: #FAF1E9;
   --slate: #34688C;
   --steel: #2F6690;
   --navy: #1E3648;
   --periwinkle: #EDF1FD;
   --hairline: #5B6670;
+
+  /* roles (so dark mode only has to swap a handful of values) */
+  --surface-raised: #ffffff; /* cards, dropdowns — was literal #fff */
+  --block: var(--navy);      /* branded dark-blue block: btn-dark, callouts, skip link */
+  --on-block: #ffffff;       /* text on --block and on --steel buttons */
+
+  /* difficulty pills on the reading list */
+  --pill-lighter-bg: #d8ede0;
+  --pill-moderate-bg: #f6e6c8;
+  --pill-heavier-bg: #efd8d2;
+  --pill-text: var(--navy);
+
+  color-scheme: light;
+}
+
+/* dark — system preference, unless an explicit light choice is set */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --cream: #14212b;
+    --slate: #aec6d6;
+    --steel: #4a86ad;
+    --navy: #e7eef4; /* the "ink" colour flips light */
+    --periwinkle: #1b2b37;
+    --hairline: #3b4c59;
+
+    --surface-raised: #1d2d39;
+    --block: #24455c;
+    --on-block: #ffffff;
+
+    --pill-lighter-bg: #1f3d33;
+    --pill-moderate-bg: #3d341f;
+    --pill-heavier-bg: #3e2b26;
+    --pill-text: #e7eef4;
+
+    color-scheme: dark;
+  }
+}
+
+/* dark — explicit toggle, wins over any system preference */
+:root[data-theme="dark"] {
+  --cream: #14212b;
+  --slate: #aec6d6;
+  --steel: #4a86ad;
+  --navy: #e7eef4;
+  --periwinkle: #1b2b37;
+  --hairline: #3b4c59;
+
+  --surface-raised: #1d2d39;
+  --block: #24455c;
+  --on-block: #ffffff;
+
+  --pill-lighter-bg: #1f3d33;
+  --pill-moderate-bg: #3d341f;
+  --pill-heavier-bg: #3e2b26;
+  --pill-text: #e7eef4;
+
+  color-scheme: dark;
 }
 
 * { box-sizing: border-box; }
@@ -33,7 +91,7 @@ body {
 .btn {
   display: inline-block;
   background: var(--steel);
-  color: #fff;
+  color: var(--on-block);
   padding: 0.9rem 1.6rem;
   text-transform: uppercase;
   text-decoration: none;
@@ -44,7 +102,7 @@ body {
   cursor: pointer;
 }
 
-.btn-dark { background: var(--navy); }
+.btn-dark { background: var(--block); }
 
 .btn:focus-visible {
   outline: 3px solid var(--navy);
@@ -56,8 +114,8 @@ body {
   left: 1rem;
   top: -100%;
   z-index: 100;
-  background: var(--navy);
-  color: #fff;
+  background: var(--block);
+  color: var(--on-block);
   padding: 0.75rem 1rem;
   text-decoration: none;
   font-weight: 600;

@@ -289,7 +289,7 @@ const withCitedBooks = (text: string) => citeBookTitles(text, bookTitles.value)
 
 .book-card {
   border: 1px solid var(--hairline);
-  background: #fff;
+  background: var(--surface-raised);
 }
 
 .book-card[open] {
@@ -366,19 +366,19 @@ const withCitedBooks = (text: string) => citeBookTitles(text, bookTitles.value)
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  color: var(--navy);
+  color: var(--pill-text);
 }
 
 .pill-lighter {
-  background: #d8ede0;
+  background: var(--pill-lighter-bg);
 }
 
 .pill-moderate {
-  background: #f6e6c8;
+  background: var(--pill-moderate-bg);
 }
 
 .pill-heavier {
-  background: #efd8d2;
+  background: var(--pill-heavier-bg);
 }
 
 /* ── Bottom CTA ── */
@@ -404,8 +404,8 @@ const withCitedBooks = (text: string) => citeBookTitles(text, bookTitles.value)
 .cta-section .btn {
   display: inline-block;
   padding: 0.9rem 1.75rem;
-  background: var(--navy);
-  color: #fff;
+  background: var(--block);
+  color: var(--on-block);
   text-decoration: none;
   font-weight: 700;
   text-transform: uppercase;

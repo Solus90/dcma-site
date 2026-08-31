@@ -186,7 +186,7 @@ onUnmounted(() => window.removeEventListener('hashchange', openHashSection))
 
 .section-card {
   border: 1px solid var(--hairline);
-  background: #fff;
+  background: var(--surface-raised);
 }
 
 .section-card[open] {
@@ -358,7 +358,7 @@ details[open] .card-chevron {
   margin: 0 0 1.25rem;
   padding: 1.25rem 1.5rem;
   background: var(--navy);
-  color: #fff;
+  color: var(--on-block);
 }
 
 .callout-label {
