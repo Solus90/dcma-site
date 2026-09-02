@@ -29,4 +29,11 @@ describe('revalidatePathsForDoc', () => {
     expect(revalidatePathsForDoc('contactSubmission')).toEqual([])
     expect(revalidatePathsForDoc(undefined)).toEqual([])
   })
+
+  it('rejects a slug that could escape the origin', () => {
+    // `//evil.example.com` is a protocol-relative URL — must not become a path
+    for (const bad of ['/evil.example.com', 'evil.example.com', 'a/b', '../x', 'foo bar', 'FOO', 'foo.', '-']) {
+      expect(revalidatePathsForDoc('page', bad)).toEqual([])
+    }
+  })
 })
