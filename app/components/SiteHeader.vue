@@ -42,7 +42,12 @@ function isInternal(href: string) {
     </nav>
 
     <div class="header-actions">
-      <ClientOnly><ThemeToggle /></ClientOnly>
+      <ClientOnly>
+        <ThemeToggle />
+        <template #fallback>
+          <span class="toggle-placeholder" aria-hidden="true" />
+        </template>
+      </ClientOnly>
       <a
         class="btn join"
         :href="settings.joinCta.href"
@@ -199,6 +204,20 @@ nav > a:focus-visible,
   display: flex;
   align-items: center;
   gap: 0.6rem;
+}
+
+/* reserves the ThemeToggle's footprint until it hydrates, so the join button
+   doesn't jump on load */
+.toggle-placeholder {
+  display: block;
+  width: 6.6rem;
+  height: 44px;
+}
+
+@media (max-width: 900px) {
+  .toggle-placeholder {
+    width: 2.7rem;
+  }
 }
 
 .join {

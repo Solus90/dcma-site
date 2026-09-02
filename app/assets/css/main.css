@@ -38,7 +38,7 @@
     --pill-lighter-bg: #1f3d33;
     --pill-moderate-bg: #3d341f;
     --pill-heavier-bg: #3e2b26;
-    --pill-text: #e7eef4;
+    --pill-text: var(--navy);
 
     color-scheme: dark;
   }
@@ -60,7 +60,7 @@
   --pill-lighter-bg: #1f3d33;
   --pill-moderate-bg: #3d341f;
   --pill-heavier-bg: #3e2b26;
-  --pill-text: #e7eef4;
+  --pill-text: var(--navy);
 
   color-scheme: dark;
 }

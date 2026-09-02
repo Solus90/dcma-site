@@ -72,6 +72,13 @@ const next: Record<ThemePref, ThemePref> = {
   border-color: var(--navy);
 }
 
+/* reserve the widest label ("System") so cycling modes doesn't reflow the header */
+.label {
+  display: inline-block;
+  min-width: 3.6em;
+  text-align: left;
+}
+
 .theme-toggle:focus-visible {
   outline: 3px solid var(--navy);
   outline-offset: 2px;
@@ -98,6 +105,7 @@ const next: Record<ThemePref, ThemePref> = {
   .label {
     position: absolute;
     width: 1px;
+    min-width: 0;
     height: 1px;
     padding: 0;
     margin: -1px;
