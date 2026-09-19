@@ -8,10 +8,6 @@ useSeoMeta({
   description: () => page.value?.seo.description,
 })
 
-const requestCta = computed(() =>
-  page.value?.howItWorksCards.find(c => c._key === 'request')?.cta,
-)
-
 function formatDate(iso: string) {
   return new Date(iso).toLocaleDateString('en-US', {
     year: 'numeric',
@@ -29,8 +25,7 @@ function formatDate(iso: string) {
       :tagline="page.heroTagline"
       :image-url="page.heroImageUrl"
       :image-alt="page.heroImageAlt || page.heroHeading"
-      :cta="requestCta ?? page.heroCta"
-      :secondary-cta="requestCta ? page.heroCta : undefined"
+      :cta="page.heroCta"
     />
     <section class="mission">
       <div v-if="page.missionImageUrl" class="mission-media">
