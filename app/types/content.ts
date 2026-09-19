@@ -70,11 +70,6 @@ export interface HomePage {
   missionBody: string
   missionImageUrl?: string
   missionImageAlt?: string
-  howItWorksHeading: string
-  howItWorksIntro: string
-  howItWorksCards: Card[]
-  stats: string[]
-  statsAriaLabel: string
   activitiesHeading: string
   activities: Card[]
   contactHeading: string
@@ -159,13 +154,6 @@ export interface ContactSectionBlock {
   heading?: string
 }
 
-export interface StatsSection {
-  _key: string
-  _type: 'statsSection'
-  stats: string[]
-  ariaLabel?: string
-}
-
 export type PageSection =
   | HeroSection
   | SplitSection
@@ -173,7 +161,6 @@ export type PageSection =
   | CardGridSection
   | CtaSection
   | ContactSectionBlock
-  | StatsSection
 
 export interface CmsPage {
   title: string

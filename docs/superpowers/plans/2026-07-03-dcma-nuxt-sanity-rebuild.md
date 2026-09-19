@@ -183,7 +183,6 @@ export default defineType({
     defineField({ name: 'missionHeading', type: 'string' }),
     defineField({ name: 'missionBody', type: 'text' }),
     defineField({ name: 'howItWorksHeading', type: 'string' }),
-    defineField({ name: 'howItWorksIntro', type: 'text' }),
     defineField({ name: 'howItWorksCards', type: 'array', of: [{ type: 'card' }] }),
     defineField({ name: 'stats', type: 'array', of: [{ type: 'string' }] }),
     defineField({ name: 'activities', type: 'array', of: [{ type: 'card' }] }),
@@ -294,14 +293,6 @@ async function run() {
     missionEyebrow: 'OUR MISSION',
     missionHeading: 'WE STAND TOGETHER IN SOLIDARITY',
     missionBody: 'We believe that mutual aid is the foundation of a resilient community. Our mission is to bridge the gap between those who have and those who need, ensuring that no one is left behind. By fostering direct support and shared resources, we create a network where solidarity is not just a principle, but a daily practice.',
-    howItWorksHeading: 'How It Works',
-    howItWorksIntro: 'We believe in direct action and shared responsibility. Here’s how our community network operates.',
-    howItWorksCards: [
-      { _key: 'offer', _type: 'card', title: 'Offer Help', body: 'Whether you have extra groceries, a spare tire, or just a listening ear, we provide a simple way to share your resources.', cta: { label: 'OFFER SUPPORT', href: 'mailto:mutualaiddoorcounty@gmail.com?subject=Offer%20Support' } },
-      { _key: 'request', _type: 'card', title: 'Request Help', body: 'Fill out our community agreement form to let us know what you need. We will match you with local neighbors who can assist.', cta: { label: 'REQUEST SUPPORT', href: 'mailto:mutualaiddoorcounty@gmail.com?subject=Request%20Support' } },
-      { _key: 'join', _type: 'card', title: 'Join Network', body: 'Stay updated with our community impact and solidarity events. Become a part of a network that values collective action.', cta: JOIN },
-    ],
-    stats: ['150+ HOURS OF DIRECT SUPPORT PROVIDED', '70+ NEW COMMUNITY MEMBERS JOINED', 'SOLIDARITY MEETINGS SUCCESSFULLY FACILITATED'],
     activities: [
       { _key: 'a1', _type: 'card', title: 'Direct Support', body: 'Providing food, shelter, and essential supplies to neighbors in need.' },
       { _key: 'a2', _type: 'card', title: 'Solidarity Meetings', body: 'Facilitating open dialogue and resource-sharing agreements.' },
@@ -383,7 +374,6 @@ export interface SiteSettings {
 export interface HomePage {
   heroHeading: string; heroTagline: string; heroImageUrl: string; heroCta: Cta
   missionEyebrow: string; missionHeading: string; missionBody: string
-  howItWorksHeading: string; howItWorksIntro: string; howItWorksCards: Card[]
   stats: string[]; activities: Card[]; contactHeading: string
   seo: { title: string; description: string }
 }
@@ -425,8 +415,7 @@ export const SITE_SETTINGS_QUERY = /* groq */ `*[_id == "siteSettings"][0]{
 
 export const HOME_QUERY = /* groq */ `*[_id == "homePage"][0]{
   heroHeading, heroTagline, "heroImageUrl": heroImage.asset->url, heroCta,
-  missionEyebrow, missionHeading, missionBody,
-  howItWorksHeading, howItWorksIntro, howItWorksCards, stats, activities,
+  missionEyebrow, missionHeading, missionBody, activities,
   contactHeading, seo }`
 
 export const FRIDGE_QUERY = /* groq */ `*[_id == "fridgePage"][0]{
@@ -588,39 +577,14 @@ git add -A && git commit -m "feat: design tokens, header/footer, default layout"
 ### Task 6: Home page
 
 **Files:**
-- Create: `app/pages/index.vue`, `app/components/home/HomeHero.vue`, `app/components/home/HowItWorks.vue`, `app/components/home/StatsMarquee.vue`, `app/components/home/ActivityGrid.vue`
+- Create: `app/pages/index.vue`, `app/components/home/HomeHero.vue`, `app/components/home/HowItWorks.vue`, `app/components/home/ActivityGrid.vue`
 - Test: `tests/home.test.ts`
 
 **Interfaces:**
 - Consumes: `useHomePage()` (Task 4), `Card`/`Cta` types, `.display`/`.btn` classes (Task 5).
-- Produces: complete `/` route. `HowItWorks` props: `{ heading: string; intro: string; cards: Card[] }`. `StatsMarquee` props: `{ stats: string[] }`. `ActivityGrid` props: `{ activities: Card[] }`. `HomeHero` props: `{ heading: string; tagline: string; imageUrl: string; cta: Cta }`.
+- Produces: complete `/` route. `ActivityGrid` props: `{ activities: Card[] }`. `HomeHero` props: `{ heading: string; tagline: string; imageUrl: string; cta: Cta }`.
 
 - [ ] **Step 1: Failing tests**
-
-```ts
-// tests/home.test.ts
-import { describe, it, expect } from 'vitest'
-import { mount } from '@vue/test-utils'
-import HowItWorks from '../app/components/home/HowItWorks.vue'
-import StatsMarquee from '../app/components/home/StatsMarquee.vue'
-
-describe('HowItWorks', () => {
-  it('renders a card with title, body, and cta link', () => {
-    const w = mount(HowItWorks, { props: { heading: 'How It Works', intro: 'intro',
-      cards: [{ _key: 'k1', title: 'Offer Help', body: 'Share resources.', cta: { label: 'OFFER SUPPORT', href: 'mailto:x@y.z' } }] } })
-    expect(w.text()).toContain('Offer Help')
-    expect(w.find('a[href="mailto:x@y.z"]').text()).toBe('OFFER SUPPORT')
-  })
-})
-
-describe('StatsMarquee', () => {
-  it('renders every stat and is marked decorative for AT', () => {
-    const w = mount(StatsMarquee, { props: { stats: ['150+ HOURS', '70+ MEMBERS'] } })
-    expect(w.text()).toContain('150+ HOURS')
-    expect(w.text()).toContain('70+ MEMBERS')
-  })
-})
-```
 
 Run: `pnpm test` → FAIL.
 
@@ -676,25 +640,6 @@ defineProps<{ heading: string; intro: string; cards: Card[] }>()
 ```
 
 ```vue
-<!-- app/components/home/StatsMarquee.vue -->
-<script setup lang="ts">
-defineProps<{ stats: string[] }>()
-</script>
-<template>
-  <div class="marquee" role="presentation">
-    <span v-for="(s, i) in stats" :key="i" class="eyebrow">• {{ s }} </span>
-  </div>
-</template>
-<style scoped>
-.marquee { overflow: hidden; white-space: nowrap; border-block: 1px solid var(--hairline); padding: 1rem 0; }
-@media (prefers-reduced-motion: no-preference) {
-  .marquee span { display: inline-block; animation: slide 30s linear infinite; }
-  @keyframes slide { from { transform: translateX(0) } to { transform: translateX(-100%) } }
-}
-</style>
-```
-
-```vue
 <!-- app/components/home/ActivityGrid.vue -->
 <script setup lang="ts">
 import type { Card } from '~/types/content'
@@ -727,8 +672,6 @@ useSeoMeta({ title: () => page.value?.seo.title, description: () => page.value?.
       <h2 class="display">{{ page.missionHeading }}</h2>
       <p>{{ page.missionBody }}</p>
     </section>
-    <HowItWorks :heading="page.howItWorksHeading" :intro="page.howItWorksIntro" :cards="page.howItWorksCards" />
-    <StatsMarquee :stats="page.stats" />
     <ActivityGrid :activities="page.activities" />
     <ContactSection :heading="page.contactHeading" />
   </main>

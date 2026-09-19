@@ -9,7 +9,6 @@ import type {
   MutualAidPage,
   NavLink,
   SiteSettings,
-  StatsSection,
   UpdatesPage,
 } from '~/types/content'
 import { DEFAULT_ABOUT_PAGE } from '~/utils/aboutPageDefaults'
@@ -104,7 +103,6 @@ export function normalizeSiteSettings(data: SiteSettings): SiteSettings {
 export function normalizeHomePage(data: HomePage): HomePage {
   return {
     ...data,
-    statsAriaLabel: data.statsAriaLabel || 'Community impact',
     activitiesHeading: data.activitiesHeading || 'WHAT WE DO',
     contactForm: mergeRecords(DEFAULT_CONTACT_FORM, data.contactForm),
   }
@@ -125,12 +123,7 @@ export function normalizeCmsPage(data: CmsPage): CmsPage {
   return {
     ...data,
     sections: data.sections.map((section) => {
-      if (section._type !== 'statsSection') return section
-      const statsSection = section as StatsSection
-      return {
-        ...statsSection,
-        ariaLabel: statsSection.ariaLabel || 'Community impact',
-      }
+      return section
     }),
   }
 }

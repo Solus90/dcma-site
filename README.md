@@ -109,7 +109,7 @@ Studio sidebar structure:
 | Studio item | What it controls |
 | --- | --- |
 | **Site Settings** | Org name, logo, email, Facebook, address, nav links, footer, error-page copy |
-| **Home Page** | Homepage hero, mission, how-it-works cards, stats, activities, contact form labels |
+| **Home Page** | Homepage hero, mission, activities, contact form labels |
 | **Full Hearts Fridge** | Fridge program page — location, hours, donation guidelines, CTAs |
 | **About Page** | Community agreement / norms document |
 | **What Is Mutual Aid Page** | The `/what-is-mutual-aid` explainer — sections, FAQ, the reading list |
@@ -129,7 +129,7 @@ Singleton documents (Site Settings, Home, Fridge, About, What Is Mutual Aid, Upd
 ### Edit the homepage
 
 1. Open **Home Page**.
-2. Sections map to the live page top-to-bottom: hero → mission → how it works → stats → activities → contact form.
+2. Sections map to the live page top-to-bottom: hero → mission → activities → contact form.
 3. **Cards** (how-it-works, activities) support title, body, optional image, and optional CTA (label + link/mailto).
 4. **Contact form** fields under `contactForm` control form labels and messages, not the submissions themselves.
 5. Publish.
@@ -171,7 +171,6 @@ Singleton documents (Site Settings, Home, Fridge, About, What Is Mutual Aid, Upd
 | Card grid | Simple cards or cards with photos |
 | Call to action | Heading, note, one or two CTAs |
 | Contact form | Embeds the site contact form (uses Home Page form copy) |
-| Stats marquee | Scrolling stat lines |
 
 ### Upload or replace an image
 

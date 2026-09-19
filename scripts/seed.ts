@@ -197,15 +197,6 @@ async function run() {
     missionHeading: 'A HUB, NOT AN ORGANIZATION',
     missionBody: 'Door County Mutual Aid Collective is a coordination hub — a place where neighbors organize, projects get started, and connections get made across Door County. Projects are born here, built by members, and supported by the collective. If you need help, want to offer it, or have an idea to bring to the group, this is where it starts.',
     missionImage: imageField(photos.handsJoined),
-    howItWorksHeading: 'How to Plug In',
-    howItWorksIntro: 'Three ways to connect. Pick the one that fits today.',
-    howItWorksCards: [
-      { _key: 'request', _type: 'card', title: 'Request Help', body: 'Tell us what you need — food, a ride, help with a bill. Email us and a neighbor will follow up.', cta: REQUEST },
-      { _key: 'offer', _type: 'card', title: 'Offer Help', body: 'Got extra groceries, tools, or time? Let us know what you can share and we\'ll connect you with someone nearby.', cta: { label: 'OFFER SUPPORT', href: 'mailto:mutualaiddoorcounty@gmail.com?subject=Offer%20Support' } },
-      { _key: 'join', _type: 'card', title: 'Join the Network', body: 'Get updates on meetings and ways to show up for neighbors.', cta: JOIN },
-    ],
-    stats: [],
-    statsAriaLabel: 'Community impact',
     activitiesHeading: 'CONNECTED PROJECTS',
     activities: [
       { _key: 'a1', _type: 'card', title: 'Full Hearts Fridge', body: 'A community fridge we’re building in Sturgeon Bay to cut food waste and get nourishing meals to neighbors. Volunteers needed for the build-out.', cta: { label: 'LEARN MORE', href: '/projects/full-hearts-fridge' }, image: imageField(photos.strawberryUnload) },
