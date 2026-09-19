@@ -39,9 +39,6 @@ const sectionFields = /* groq */ `
   _type == "contactSectionBlock" => {
     heading
   },
-  _type == "statsSection" => {
-    stats, ariaLabel
-  }
 `
 
 export const HOME_QUERY = /* groq */ `*[_id == "homePage"][0]{
@@ -51,10 +48,7 @@ export const HOME_QUERY = /* groq */ `*[_id == "homePage"][0]{
   heroCta,
   missionEyebrow, missionHeading, missionBody,
   "missionImageUrl": missionImage.asset->url,
-  "missionImageAlt": coalesce(missionImage.alt, missionHeading),
-  howItWorksHeading, howItWorksIntro,
-  howItWorksCards[]{${cardFields}},
-  stats, statsAriaLabel, activitiesHeading,
+  "missionImageAlt": coalesce(missionImage.alt, missionHeading), activitiesHeading,
   activities[]{${cardFields}},
   contactHeading, contactForm, seo }`
 

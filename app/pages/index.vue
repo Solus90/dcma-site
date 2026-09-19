@@ -47,12 +47,6 @@ function formatDate(iso: string) {
         <p class="body">{{ page.missionBody }}</p>
       </div>
     </section>
-    <HomeHowItWorks
-      :heading="page.howItWorksHeading"
-      :intro="page.howItWorksIntro"
-      :cards="page.howItWorksCards"
-    />
-    <HomeStatsMarquee v-if="page.stats?.length" :stats="page.stats" :aria-label="page.statsAriaLabel" />
     <HomeActivityGrid :heading="page.activitiesHeading" :activities="page.activities" />
 
     <section v-if="latestUpdate" class="latest-update" aria-labelledby="latest-update-heading">

@@ -120,22 +120,6 @@ export const contactSectionBlock = defineType({
   },
 })
 
-export const statsSection = defineType({
-  name: 'statsSection',
-  title: 'Stats marquee',
-  type: 'object',
-  fields: [
-    defineField({ name: 'stats', type: 'array', of: [{ type: 'string' }], validation: (r) => r.min(1) }),
-    defineField({ name: 'ariaLabel', type: 'string', title: 'Aria label' }),
-  ],
-  preview: {
-    select: { stats: 'stats' },
-    prepare({ stats }) {
-      return { title: 'Stats marquee', subtitle: stats?.[0] }
-    },
-  },
-})
-
 export const pageSectionTypes = [
   heroSection,
   splitSection,
@@ -143,5 +127,4 @@ export const pageSectionTypes = [
   cardGridSection,
   ctaSection,
   contactSectionBlock,
-  statsSection,
 ]

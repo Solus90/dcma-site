@@ -34,7 +34,6 @@ export default defineType({
         { type: 'cardGridSection' },
         { type: 'ctaSection' },
         { type: 'contactSectionBlock' },
-        { type: 'statsSection' },
       ],
       validation: (r) => r.min(1),
     }),

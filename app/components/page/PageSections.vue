@@ -64,11 +64,5 @@ defineProps<{
       :form-copy="contactForm"
       :settings="settings"
     />
-
-    <HomeStatsMarquee
-      v-else-if="section._type === 'statsSection'"
-      :stats="section.stats"
-      :aria-label="section.ariaLabel || 'Community impact'"
-    />
   </template>
 </template>
