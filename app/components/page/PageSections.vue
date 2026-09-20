@@ -37,13 +37,6 @@ defineProps<{
       :body="section.body"
     />
 
-    <HomeHowItWorks
-      v-else-if="section._type === 'cardGridSection' && section.style !== 'photos'"
-      :heading="section.heading || ''"
-      :intro="section.intro || ''"
-      :cards="section.cards"
-    />
-
     <HomeActivityGrid
       v-else-if="section._type === 'cardGridSection'"
       :heading="section.heading || ''"

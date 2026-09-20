@@ -71,7 +71,6 @@ function formatDate(iso: string) {
         </div>
         <aside class="contact-reach">
           <p class="reach-note">{{ settings.meetingNote }}</p>
-          <p class="reach-address">{{ settings.address }}</p>
           <a class="reach-email" :href="`mailto:${settings.email}`">{{ settings.email }}</a>
         </aside>
       </div>
@@ -214,12 +213,6 @@ function formatDate(iso: string) {
   font-size: 1.05rem;
   line-height: 1.4;
   color: var(--navy);
-}
-
-.reach-address {
-  margin: 0 0 1.5rem;
-  white-space: pre-line;
-  line-height: 1.6;
 }
 
 .reach-email {

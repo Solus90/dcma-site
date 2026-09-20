@@ -152,7 +152,6 @@ async function submit(event: Event) {
 
       <aside class="reach">
         <p class="reach-note">{{ settings.meetingNote }}</p>
-        <p class="reach-address">{{ settings.address }}</p>
         <a
           class="reach-email"
           :href="`mailto:${settings.email}`"
@@ -276,12 +275,6 @@ textarea:focus-visible {
   font-size: 1.05rem;
   line-height: 1.4;
   color: var(--navy);
-}
-
-.reach-address {
-  margin: 0 0 1.5rem;
-  white-space: pre-line;
-  line-height: 1.6;
 }
 
 .reach-email {
