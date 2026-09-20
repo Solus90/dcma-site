@@ -18,7 +18,6 @@ export function makeSettings(overrides?: Partial<SiteSettings>): SiteSettings {
     logoUrl: '',
     email: 'x@y.z',
     facebookUrl: 'https://facebook.com/x',
-    address: '',
     meetingNote: '',
     joinCta: makeCta({ label: 'JOIN', href: '#' }),
     footerTagline: 'MUTUAL AID FOR ALL',
