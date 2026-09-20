@@ -47,7 +47,6 @@ export interface SiteSettings {
   logoUrl: string
   email: string
   facebookUrl: string
-  address: string
   meetingNote: string
   joinCta: Cta
   footerTagline: string

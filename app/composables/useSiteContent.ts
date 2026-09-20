@@ -1,7 +1,7 @@
 import type { SiteSettings, HomePage, FridgePage, CmsPage, AboutPage, MutualAidPage, UpdatesPage, Update } from '~/types/content'
 import { normalizeAboutPage, normalizeCmsPage, normalizeFridgePage, normalizeHomePage, normalizeMutualAidPage, normalizeSiteSettings, normalizeUpdatesPage } from '~/utils/contentDefaults'
 export const SITE_SETTINGS_QUERY = /* groq */ `*[_id == "siteSettings"][0]{
-  orgName, "logoUrl": logo.asset->url, email, facebookUrl, address,
+  orgName, "logoUrl": logo.asset->url, email, facebookUrl,
   meetingNote, joinCta, footerTagline, copyright,
   skipLinkLabel, facebookLabel, navAriaLabel,
   navLinks[]{ label, href, children[]{ label, href } },

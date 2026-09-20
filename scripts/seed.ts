@@ -173,7 +173,6 @@ async function run() {
     logo: img(logo, 'Door County Mutual Aid'),
     email: 'mutualaiddoorcounty@gmail.com',
     facebookUrl: 'https://www.facebook.com/profile.php?id=61589260305803',
-    address: '611 Jefferson Street\nSturgeon Bay',
     meetingNote: 'Mutual Aid Meetings Monthly',
     joinCta: JOIN,
     footerTagline: 'MUTUAL AID FOR ALL',
