@@ -14,7 +14,7 @@ export default defineNuxtConfig({
   app: {
     head: {
       htmlAttrs: { lang: 'en' },
-            // Set the saved theme before first paint so there's no flash. `system`
+      // Set the saved theme before first paint so there's no flash. `dark`
       // (no data-theme) is handled by the prefers-color-scheme rules in main.css.
       script: [{
         innerHTML: `(function(){try{var t=localStorage.getItem('dcma-theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t}catch(e){}})()`,
