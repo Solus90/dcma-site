@@ -5,12 +5,6 @@ defineProps<{ settings: SiteSettings }>()
 
 <template>
   <footer class="site-footer">
-    <img
-      :src="settings.logoUrl"
-      :alt="settings.orgName"
-      class="footer-logo"
-      height="40"
-    >
     <p class="display tagline">{{ settings.footerTagline }}</p>
     <p class="footer-meta">
       <a :href="settings.facebookUrl" v-bind="linkTarget(settings.facebookUrl)">{{ settings.facebookLabel }}</a>
@@ -33,7 +27,7 @@ defineProps<{ settings: SiteSettings }>()
 }
 
 .tagline {
-  font-size: clamp(2.5rem, 12vw, 9rem);
+  font-size: clamp(2.5rem, 12vw, 4.5rem);
   margin: 0;
   text-wrap: balance;
 }
