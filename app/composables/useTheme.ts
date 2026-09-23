@@ -22,7 +22,7 @@ export function useTheme() {
   }
 
   onMounted(() => {
-    pref.value = pref.value === 'light' ? 'dark' :'light'
+    pref.value = pref.value === 'light' ? 'light' :'dark'
   })
 
   return { pref, set, cycle }
