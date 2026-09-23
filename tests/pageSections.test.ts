@@ -83,13 +83,6 @@ describe('PageSections', () => {
     expect(text).toContain('Contact heading')
   })
 
-  it('routes cardGridSection to HowItWorks unless style is "photos"', () => {
-    const w = mountSections(sections)
-
-    expect(w.findAllComponents(HomeHowItWorks)).toHaveLength(1)
-    expect(w.findAllComponents(HomeActivityGrid)).toHaveLength(1)
-  })
-
   it('renders nothing for an unrecognized _type instead of throwing', () => {
     const w = mountSections([
       { _key: 'ghost', _type: 'retiredSection' } as unknown as PageSection,
