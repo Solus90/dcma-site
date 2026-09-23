@@ -3,9 +3,12 @@ export type ThemePref = 'light' | 'dark'
 export function useTheme() {
   const pref = useState<ThemePref>('theme-pref', () => 'dark')
 
+  const STORAGE_KEY = 'dcma-theme'
+  
   function apply(value: ThemePref) {
     if (!import.meta.client) return
     const root = document.documentElement
+    localStorage.setItem(STORAGE_KEY, value)
     root.dataset.theme = value
   }
 
