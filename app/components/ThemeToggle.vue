@@ -4,15 +4,13 @@ import type { ThemePref } from '~/composables/useTheme'
 const { pref, cycle } = useTheme()
 
 const LABEL: Record<ThemePref, string> = {
-  system: 'System',
   light: 'Light',
   dark: 'Dark',
 }
 
 const next: Record<ThemePref, ThemePref> = {
-  system: 'light',
+  dark: 'light',
   light: 'dark',
-  dark: 'system',
 }
 </script>
 
@@ -72,7 +70,6 @@ const next: Record<ThemePref, ThemePref> = {
   border-color: var(--navy);
 }
 
-/* reserve the widest label ("System") so cycling modes doesn't reflow the header */
 .label {
   display: inline-block;
   min-width: 3.6em;
