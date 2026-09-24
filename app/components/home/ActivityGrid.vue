@@ -17,10 +17,12 @@ defineProps<{ heading: string; activities: Card[] }>()
         >
         <h3>{{ a.title }}</h3>
         <p>{{ a.body }}</p>
-        <NuxtLink v-if="a.cta?.href?.startsWith('/')" :to="a.cta.href" class="card-link">{{ a.cta.label }}</NuxtLink>
-        <a v-else-if="a.cta?.href" :href="a.cta.href" class="card-link">{{ a.cta.label }}</a>
       </article>
     </div>
+    <br></br>
+    <hr></hr>
+    <br></br>
+    <a href="https://discord.gg/dpRZGJSmSb" class="btn">Join us in Discord!</a>
   </section>
 </template>
 
