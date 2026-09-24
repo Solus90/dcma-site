@@ -142,7 +142,7 @@ async function submit(event: Event) {
           <span v-if="fieldErrors.message" id="err-message" class="field-error" role="alert">{{ fieldErrors.message }}</span>
         </label>
         <input v-model="form.website" type="text" name="website" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
-        <button class="btn btn-dark submit" :disabled="state === 'sending'">
+        <button class="btn submit" :disabled="state === 'sending'">
           {{ state === 'sending' ? formCopy.sendingLabel : formCopy.submitLabel }}
         </button>
         <p v-if="formError" role="alert" class="form-error">{{ formError }}</p>

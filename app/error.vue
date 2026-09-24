@@ -23,7 +23,7 @@ useHead({
         {{ is404 ? copy.notFoundDescription : copy.genericDescription }}
       </p>
       <div class="actions">
-        <NuxtLink to="/" class="btn btn-dark">{{ copy.backHomeLabel }}</NuxtLink>
+        <NuxtLink to="/" class="btn">{{ copy.backHomeLabel }}</NuxtLink>
         <NuxtLink to="/projects/full-hearts-fridge" class="btn">{{ copy.fridgeLinkLabel }}</NuxtLink>
         <a
           class="btn btn-outline"

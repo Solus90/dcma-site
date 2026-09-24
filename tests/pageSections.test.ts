@@ -4,7 +4,6 @@ import PageSections from '../app/components/page/PageSections.vue'
 import HomeHero from '../app/components/home/HomeHero.vue'
 import PageSplitSection from '../app/components/page/PageSplitSection.vue'
 import PageProseSection from '../app/components/page/PageProseSection.vue'
-import HomeHowItWorks from '../app/components/home/HowItWorks.vue'
 import HomeActivityGrid from '../app/components/home/ActivityGrid.vue'
 import FridgeClosingCta from '../app/components/fridge/FridgeClosingCta.vue'
 import ContactSection from '../app/components/ContactSection.vue'
@@ -60,7 +59,6 @@ function mountSections(list: PageSection[]) {
         HomeHero,
         PageSplitSection,
         PageProseSection,
-        HomeHowItWorks,
         HomeActivityGrid,
         FridgeClosingCta,
         ContactSection,

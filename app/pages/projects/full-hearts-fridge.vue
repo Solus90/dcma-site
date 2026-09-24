@@ -32,7 +32,7 @@ const errorMailto = computed(() => {
         <h1 class="display">{{ shell.errorHeading }}</h1>
         <p>{{ shell.errorMessage }}</p>
         <a
-          class="btn btn-dark"
+          class="btn "
           :href="errorMailto"
           v-bind="linkTarget(errorMailto)"
         >
@@ -48,7 +48,7 @@ const errorMailto = computed(() => {
             <h1 class="display">{{ page.heading }}</h1>
             <p class="lede">{{ page.intro }}</p>
             <div class="hero-actions">
-              <a class="btn btn-dark" :href="page.cta.href" v-bind="linkTarget(page.cta.href)">{{ page.cta.label }}</a>
+              <a class="btn" :href="page.cta.href" v-bind="linkTarget(page.cta.href)">{{ page.cta.label }}</a>
               <a class="btn btn-outline" href="#find-fridge">{{ page.findFridgeCtaLabel }}</a>
             </div>
           </div>
@@ -88,7 +88,7 @@ const errorMailto = computed(() => {
 
       <nav class="mobile-actions" :aria-label="page.quickActionsAriaLabel">
         <a class="btn btn-outline" href="#find-fridge">{{ page.findFridgeMobileCtaLabel }}</a>
-        <a class="btn btn-dark" :href="page.cta.href" v-bind="linkTarget(page.cta.href)">{{ page.cta.label }}</a>
+        <a class="btn" :href="page.cta.href" v-bind="linkTarget(page.cta.href)">{{ page.cta.label }}</a>
       </nav>
     </template>
   </div>

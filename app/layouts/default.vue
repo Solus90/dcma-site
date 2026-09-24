@@ -8,5 +8,5 @@ const { data: settings } = await useSiteSettings()
     <SiteHeader :settings="settings" />
     <slot :settings="settings" />
     <SiteFooter :settings="settings" />
-  </div>
+  </div
 </template>

@@ -25,7 +25,7 @@ defineProps<{
       <div v-if="cta || secondaryCta" class="actions">
         <a
           v-if="cta"
-          class="btn btn-dark"
+          class="btn"
           :href="cta.href"
           v-bind="linkTarget(cta.href)"
         >{{ cta.label }}</a>

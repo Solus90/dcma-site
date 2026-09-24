@@ -404,7 +404,7 @@ const withCitedBooks = (text: string) => citeBookTitles(text, bookTitles.value)
 .cta-section .btn {
   display: inline-block;
   padding: 0.9rem 1.75rem;
-  background: var(--block);
+  background: var(--steel);
   color: var(--on-block);
   text-decoration: none;
   font-weight: 700;
