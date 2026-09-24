@@ -67,7 +67,7 @@ function formatDate(iso: string) {
         <div class="contact-cta-copy">
           <h2 id="contact-cta-heading" class="display">{{ page.contactHeading }}</h2>
           <p v-if="page.contactForm?.reassurance" class="contact-cta-lede">{{ page.contactForm.reassurance }}</p>
-          <NuxtLink to="/contact" class="btn btn-dark">Get in touch</NuxtLink>
+          <NuxtLink to="/contact" class="btn">Get in touch</NuxtLink>
         </div>
         <aside class="contact-reach">
           <p class="reach-note">{{ settings.meetingNote }}</p>

@@ -9,7 +9,7 @@
 
   /* roles (so dark mode only has to swap a handful of values) */
   --surface-raised: #ffffff; /* cards, dropdowns — was literal #fff */
-  --block: var(--navy);      /* branded dark-blue block: btn-dark, callouts, skip link */
+  --block: var(--navy);      /* branded dark-blue block: callouts, skip link */
   --on-block: #ffffff;       /* text on --block and on --steel buttons */
 
   /* difficulty pills on the reading list */
@@ -55,7 +55,7 @@
 
   --surface-raised: #1d2d39;
   --block: #24455c;
-  --on-block: #ffffff;
+  --on-block: var(--periwinkle);
 
   --pill-lighter-bg: #1f3d33;
   --pill-moderate-bg: #3d341f;
@@ -101,8 +101,6 @@ body {
   letter-spacing: 0.05em;
   cursor: pointer;
 }
-
-.btn-dark { background: var(--block); }
 
 .btn:focus-visible {
   outline: 3px solid var(--navy);

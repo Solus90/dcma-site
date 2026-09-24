@@ -60,7 +60,7 @@ onMounted(() => {
           <li v-for="(item, i) in guidelines" :key="i">{{ item }}</li>
         </ul>
         <a
-          class="btn btn-dark donate-btn"
+          class="btn donate-btn"
           :href="donationCta.href"
           v-bind="linkTarget(donationCta.href)"
         >{{ donationCta.label }}</a>

@@ -8,7 +8,7 @@ defineProps<{ heading: string; note: string; cta: Cta; secondaryCta?: Cta }>()
     <h2 id="closing-heading" class="display">{{ heading }}</h2>
     <p class="note">{{ note }}</p>
     <div class="actions">
-      <a class="btn btn-dark" :href="cta.href" v-bind="linkTarget(cta.href)">{{ cta.label }}</a>
+      <a class="btn" :href="cta.href" v-bind="linkTarget(cta.href)">{{ cta.label }}</a>
       <a v-if="secondaryCta" class="btn btn-outline" :href="secondaryCta.href" v-bind="linkTarget(secondaryCta.href)">{{ secondaryCta.label }}</a>
     </div>
   </section>
