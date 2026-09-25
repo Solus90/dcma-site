@@ -3,6 +3,6 @@
 # so studio/ is managed with npm (see studio/package-lock.json). Root = pnpm.
 packages: []
 
-allowBuilds:
-  '@parcel/watcher': false
-  esbuild: false
+onlyBuiltDependencies:
+  - '@parcel/watcher'
+  - esbuild
