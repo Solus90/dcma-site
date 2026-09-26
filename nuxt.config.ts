@@ -77,12 +77,7 @@ export default defineNuxtConfig({
   },
   ...(isProd && {
     sitemap: {
-      sources: [
-        async () => {
-          const routes = await cmsPageRoutes()
-          return routes.map(loc => ({ loc }))
-        },
-      ],
+      sources: ['/api/__sitemap__/urls'],
     },
   }),
   sanity: {
